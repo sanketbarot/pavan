@@ -1,11 +1,17 @@
 'use strict';
 
+/* ═══════════════════════════════════════════
+   NAV ACTIVE
+═══════════════════════════════════════════ */
 function setNavActive(el) {
   document.querySelectorAll('.nav-link')
     .forEach(a => a.classList.remove('active'));
   el.classList.add('active');
 }
 
+/* ═══════════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════════ */
 function toggleMobileNav() {
   const nav = document.getElementById('mobileNav');
   const ov  = document.getElementById('overlay');
@@ -23,155 +29,303 @@ function closeMobileNav() {
   document.body.style.overflow = '';
 }
 
+/* ═══════════════════════════════════════════
+   MENU CATEGORY FILTER
+═══════════════════════════════════════════ */
 function showCat(cat, tabEl) {
+  // Update tabs
   document.querySelectorAll('.menu-tab')
     .forEach(t => t.classList.remove('active'));
-  tabEl.classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
+
+  // Clear any active search first
   _clearSearchState();
+
+  // Show / hide categories
   document.querySelectorAll('.menu-cat').forEach(c => {
-    c.classList.toggle('visible', cat === 'all' || c.dataset.cat === cat);
+    const show = cat === 'all' || c.dataset.cat === cat;
+    c.classList.toggle('visible', show);
+
+    // Reset display so CSS controls visibility properly
+    c.style.display = '';
+
+    // Reset all items inside
+    c.querySelectorAll('.menu-item').forEach(item => {
+      item.classList.remove('hl', 'dim');
+      item.style.display = '';
+    });
   });
+
+  // Stagger animation on visible items
+  let delay = 0;
   document.querySelectorAll('.menu-cat.visible .menu-item')
-    .forEach((item, i) => {
+    .forEach(item => {
       item.style.animation = 'none';
-      void item.offsetWidth;
+      void item.offsetWidth; // reflow
       item.style.animation =
-        `fu .32s ${i * 0.022}s cubic-bezier(.22,1,.36,1) both`;
+        `fu .32s ${delay}s cubic-bezier(.22,1,.36,1) both`;
+      delay += 0.022;
     });
 }
 
+/* ═══════════════════════════════════════════
+   GO TO MENU FROM GALLERY / FOOD PILLS
+═══════════════════════════════════════════ */
 function goToMenu(cat) {
   const sec = document.getElementById('menu');
   if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
   const MAP = {
-    burger:1, 'sig-burger':2, fries:3, frankie:4,
-    tikka:5, maggie:6, sandwich:7, 'sig-sandwich':8
+    'burger':       1,
+    'sig-burger':   2,
+    'fries':        3,
+    'frankie':      4,
+    'tikka':        5,
+    'maggie':       6,
+    'sandwich':     7,
+    'sig-sandwich': 8
   };
+
   setTimeout(() => {
     const tabs = document.querySelectorAll('.menu-tab');
     const idx  = MAP[cat];
-    if (idx !== undefined && tabs[idx]) showCat(cat, tabs[idx]);
+    if (idx !== undefined && tabs[idx]) {
+      showCat(cat, tabs[idx]);
+    }
   }, 640);
 }
 
-function filterMenu(q) {
-  q = q.trim().toLowerCase();
+/* ═══════════════════════════════════════════
+   SEARCH — FIXED
+═══════════════════════════════════════════ */
+function filterMenu(rawQuery) {
+  const q  = rawQuery.trim().toLowerCase();
   const cb = document.getElementById('searchClear');
   const nr = document.getElementById('noResults');
   const ts = document.getElementById('searchTerm');
-  cb.style.display = q ? 'flex' : 'none';
-  if (!q) { _clearSearchState(); return; }
-  document.querySelectorAll('.menu-tab').forEach((t,i) =>
-    t.classList.toggle('active', i === 0));
-  let total = 0;
-  document.querySelectorAll('.menu-cat').forEach(cat => {
-    let hits = 0;
-    cat.querySelectorAll('.menu-item').forEach(item => {
-      const n = (item.querySelector('.item-name')?.textContent||'').toLowerCase();
-      const hit = n.includes(q);
-      item.classList.toggle('hl', hit);
-      item.classList.toggle('dim', !hit);
-      if (hit) hits++;
-    });
-    cat.classList.toggle('visible', hits > 0);
-    total += hits;
+
+  // Toggle clear button visibility
+  if (cb) cb.style.display = q ? 'flex' : 'none';
+
+  // If empty query, restore everything
+  if (!q) {
+    _clearSearchState();
+    return;
+  }
+
+  // Mark "All" tab active while searching
+  document.querySelectorAll('.menu-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === 0);
   });
-  if (nr) nr.style.display = total === 0 ? 'block' : 'none';
-  if (ts && total === 0) ts.textContent = q;
+
+  let totalHits = 0;
+
+  document.querySelectorAll('.menu-cat').forEach(cat => {
+    let catHits = 0;
+    const items = cat.querySelectorAll('.menu-item');
+
+    items.forEach(item => {
+      // item-name lives inside:  .menu-item > .card-inner > .item-inner > .item-left > .item-name
+      const nameEl = item.querySelector('.item-name');
+      const name   = (nameEl ? nameEl.textContent : '').toLowerCase();
+      const match  = name.includes(q);
+
+      // Highlight matching / dim non-matching
+      item.classList.toggle('hl',  match);
+      item.classList.toggle('dim', !match);
+
+      // Keep item in DOM flow (display handled by class)
+      item.style.display = '';
+
+      if (match) catHits++;
+    });
+
+    // Show category only if it has at least one matching item
+    if (catHits > 0) {
+      cat.classList.add('visible');
+      cat.style.display = '';
+    } else {
+      cat.classList.remove('visible');
+      cat.style.display = 'none';
+    }
+
+    totalHits += catHits;
+  });
+
+  // No results block
+  if (nr) {
+    nr.style.display = totalHits === 0 ? 'block' : 'none';
+  }
+  if (ts && totalHits === 0) {
+    ts.textContent = rawQuery.trim();
+  }
 }
 
+/* ═══════════════════════════════════════════
+   CLEAR SEARCH
+═══════════════════════════════════════════ */
 function clearSearch() {
   const inp = document.getElementById('menuSearch');
   if (inp) inp.value = '';
   _clearSearchState();
 }
 
+/* ── Internal: reset all search-related state ── */
 function _clearSearchState() {
+  // Hide clear button
   const cb = document.getElementById('searchClear');
-  const nr = document.getElementById('noResults');
   if (cb) cb.style.display = 'none';
+
+  // Hide no-results block
+  const nr = document.getElementById('noResults');
   if (nr) nr.style.display = 'none';
-  document.querySelectorAll('.menu-item').forEach(i =>
-    i.classList.remove('hl','dim'));
-  document.querySelectorAll('.menu-cat').forEach(c =>
-    c.classList.add('visible'));
-  document.querySelectorAll('.menu-tab').forEach((t,i) =>
-    t.classList.toggle('active', i === 0));
+
+  // Remove highlight / dim from all items & restore display
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.classList.remove('hl', 'dim');
+    item.style.display = '';
+  });
+
+  // Show all categories & remove forced inline display
+  document.querySelectorAll('.menu-cat').forEach(c => {
+    c.classList.add('visible');
+    c.style.display = '';
+  });
+
+  // Re-activate "All" tab
+  document.querySelectorAll('.menu-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === 0);
+  });
 }
 
-let _tt = null;
-function showToast(msg, ms = 2600) {
-  const t = document.getElementById('toast');
-  const m = document.getElementById('toastMsg');
-  if (!t || !m) return;
-  m.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(_tt);
-  _tt = setTimeout(() => t.classList.remove('show'), ms);
+/* ═══════════════════════════════════════════
+   TOAST NOTIFICATION
+═══════════════════════════════════════════ */
+let _toastTimer = null;
+
+function showToast(msg, duration = 2600) {
+  const toast   = document.getElementById('toast');
+  const msgEl   = document.getElementById('toastMsg');
+  if (!toast || !msgEl) return;
+
+  msgEl.textContent = msg;
+  toast.classList.add('show');
+
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, duration);
 }
 
+/* ═══════════════════════════════════════════
+   SCROLL EVENTS
+═══════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  document.getElementById('scrollTop')
-    ?.classList.toggle('visible', y > 420);
-  const hH = document.querySelector('.hero-section')?.offsetHeight ?? 0;
-  if (y < hH - 100) { _hn('#home'); }
-  else {
-    document.querySelectorAll('section[id]').forEach(s => {
-      const t = s.offsetTop - 120, b = t + s.offsetHeight;
-      if (y >= t && y < b) _hn('#' + s.id);
+
+  // Scroll-to-top button visibility
+  const scrollBtn = document.getElementById('scrollTop');
+  if (scrollBtn) {
+    scrollBtn.classList.toggle('visible', y > 420);
+  }
+
+  // Active nav link highlight based on scroll position
+  const heroSection = document.querySelector('.hero-section');
+  const heroHeight  = heroSection ? heroSection.offsetHeight : 0;
+
+  if (y < heroHeight - 100) {
+    _highlightNav('#home');
+  } else {
+    document.querySelectorAll('section[id]').forEach(sec => {
+      const top    = sec.offsetTop - 120;
+      const bottom = top + sec.offsetHeight;
+      if (y >= top && y < bottom) {
+        _highlightNav('#' + sec.id);
+      }
     });
   }
 }, { passive: true });
 
-function _hn(href) {
-  document.querySelectorAll('.nav-link').forEach(a =>
-    a.classList.toggle('active', a.getAttribute('href') === href));
+/* ── Helper: highlight nav link by href ── */
+function _highlightNav(href) {
+  document.querySelectorAll('.nav-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === href);
+  });
 }
 
+/* ═══════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+═══════════════════════════════════════════ */
 document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-  if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+  const activeTag = document.activeElement.tagName;
+  const isTyping  = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+
+  // Press "/" to focus search bar
+  if (e.key === '/' && !isTyping) {
     e.preventDefault();
-    const s = document.getElementById('menuSearch');
-    const m = document.getElementById('menu');
-    if (s && m) {
-      m.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => { s.focus(); showToast('🔍 Search menu items…'); }, 450);
+    const searchInput = document.getElementById('menuSearch');
+    const menuSection = document.getElementById('menu');
+
+    if (searchInput && menuSection) {
+      menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        searchInput.focus();
+        showToast('🔍 Search menu items…');
+      }, 450);
     }
   }
+
+  // Press "Escape" to clear search / close mobile nav
   if (e.key === 'Escape') {
     clearSearch();
-    document.getElementById('menuSearch')?.blur();
+    const searchInput = document.getElementById('menuSearch');
+    if (searchInput) searchInput.blur();
     closeMobileNav();
   }
 });
 
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.style.opacity = '1';
-      e.target.style.animationPlayState = 'running';
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.07, rootMargin: '0px 0px -24px 0px' });
+/* ═══════════════════════════════════════════
+   INTERSECTION OBSERVER — Fade-up animations
+═══════════════════════════════════════════ */
+const io = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity            = '1';
+        entry.target.style.animationPlayState = 'running';
+        io.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold:   0.07,
+    rootMargin: '0px 0px -24px 0px'
+  }
+);
 
+// Observe these elements for scroll-in animations
 document.querySelectorAll(
-  '.anim, .stat-card, .gallery-card, .info-card'
+  '.anim, .stat-card, .gallery-card, .info-card, .pop-item'
 ).forEach(el => {
+  // Skip elements inside navbar or mobile nav
   if (el.closest('.navbar') || el.closest('.mobile-nav')) return;
-  el.style.opacity = '0';
+
+  el.style.opacity            = '0';
   el.style.animationPlayState = 'paused';
   io.observe(el);
 });
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) {
+/* ═══════════════════════════════════════════
+   SMOOTH ANCHOR SCROLL
+═══════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    const href   = anchor.getAttribute('href');
+    const target = document.querySelector(href);
+
+    if (target) {
       e.preventDefault();
-      t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       closeMobileNav();
     }
   });
