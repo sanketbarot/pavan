@@ -202,7 +202,7 @@ body {
 
 /* ── Content layer ── */
 .card-inner {
-  position: relative;
+  position: a;
   z-index: 3;
 }
 
@@ -1551,4 +1551,73 @@ body {
   .gallery-grid    { grid-template-columns: 1fr; }
   .stats-row       { grid-template-columns: repeat(2, 1fr); }
   .footer-inner    { flex-direction: column; text-align: center; }
+}
+
+/* =============================================
+   LOCATION CARD + MAP
+   ============================================= */
+
+.location-card {
+  grid-column: span 2;
+}
+
+/* Address row — allow text wrap */
+.location-card .info-row-inner {
+  white-space: normal;
+  line-height: 1.6;
+  align-items: flex-start;
+}
+
+/* Map wrapper */
+.map-wrap {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 14px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  filter: grayscale(15%) contrast(1.05);
+}
+
+/* Open Maps button */
+.map-btn {
+  display: inline-flex;
+  border-radius: 999px !important;
+  margin-top: 12px;
+  text-decoration: none;
+  background: rgba(255,140,66,0.10) !important;
+  border-color: rgba(255,140,66,0.22) !important;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.map-btn .card-inner {
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.map-btn:hover {
+  background: rgba(255,140,66,0.20) !important;
+  border-color: rgba(255,140,66,0.35) !important;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .location-card {
+    grid-column: span 1;
+  }
 }
