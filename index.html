@@ -9,6 +9,21 @@
 </head>
 <body>
 
+<!-- ═══ 1. PAGE LOADER (must be first) ═══ -->
+<div id="pageLoader" class="page-loader">
+  <div class="loader-content">
+    <div class="loader-icon">🍔</div>
+    <div class="loader-brand">SNACK STATION</div>
+    <div class="loader-sub">KHANEKA THIKANA</div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
+  </div>
+</div>
+
+<!-- ═══ 2. STATUS BAR (after loader, before bg) ═══ -->
+<div id="statusBar" class="status-bar status-open">
+  🟢 We are OPEN right now — Order away!
+</div>
+
 <!-- ═══ BACKGROUND ═══ -->
 <div class="bg-scene">
   <div class="blob blob-1"></div>
@@ -63,6 +78,11 @@
         <div class="nav-badge">
           <span class="live-dot"></span> Open Now
         </div>
+        <!-- ✅ FAV BUTTON — inside nav-actions -->
+        <button class="fav-nav-btn glass-card" onclick="showFavourites()" title="My Favourites">
+          <div class="card-surface"></div>
+          <div class="card-inner">❤️ <span id="favCount" class="fav-count" style="display:none;">0</span></div>
+        </button>
         <a href="tel:8460891897" class="btn btn-solid btn-sm">📞 Call</a>
       </div>
       <button class="hamburger" id="hamburger" onclick="toggleMobileNav()">
@@ -119,57 +139,11 @@
               <div class="pop-subtitle">Tonight's Favorites</div>
             </div>
             <div class="pop-list">
-
-              <!-- 🍔 Veg Burger -->
-              <div class="glass-card pop-item">
-                <div class="card-surface"></div>
-                <div class="card-inner pop-item-inner">
-                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=80&h=80&fit=crop&crop=center" alt="Veg Burger"></div>
-                  <div class="pop-info"><div class="pop-name">SS Special Burger</div><div class="pop-cat">Signature</div></div>
-                  <div class="pop-price">₹109</div>
-                </div>
-              </div>
-
-              <!-- 🌯 Frankie -->
-              <div class="glass-card pop-item">
-                <div class="card-surface"></div>
-                <div class="card-inner pop-item-inner">
-                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=80&h=80&fit=crop&crop=center" alt="Veg Frankie"></div>
-                  <div class="pop-info"><div class="pop-name">SS Special Frankie</div><div class="pop-cat">Signature</div></div>
-                  <div class="pop-price">₹149</div>
-                </div>
-              </div>
-
-              <!-- 🧀 Cheese Blast -->
-              <div class="glass-card pop-item">
-                <div class="card-surface"></div>
-                <div class="card-inner pop-item-inner">
-                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=80&h=80&fit=crop&crop=center" alt="Veg Cheese Burger"></div>
-                  <div class="pop-info"><div class="pop-name">Cheese Blast Burger</div><div class="pop-cat">Signature Burger</div></div>
-                  <div class="pop-price">₹159</div>
-                </div>
-              </div>
-
-              <!-- 🍟 Fries -->
-              <div class="glass-card pop-item">
-                <div class="card-surface"></div>
-                <div class="card-inner pop-item-inner">
-                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=80&h=80&fit=crop&crop=center" alt="French Fries"></div>
-                  <div class="pop-info"><div class="pop-name">Cheesy French Fries</div><div class="pop-cat">Fries & Nuggets</div></div>
-                  <div class="pop-price">₹119</div>
-                </div>
-              </div>
-
-              <!-- 🥪 Sandwich -->
-              <div class="glass-card pop-item">
-                <div class="card-surface"></div>
-                <div class="card-inner pop-item-inner">
-                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=80&h=80&fit=crop&crop=center" alt="Veg Sandwich"></div>
-                  <div class="pop-info"><div class="pop-name">SS Special Sandwich</div><div class="pop-cat">Signature Sandwich</div></div>
-                  <div class="pop-price">₹199</div>
-                </div>
-              </div>
-
+              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=80&h=80&fit=crop&crop=center" alt="Veg Burger"></div><div class="pop-info"><div class="pop-name">SS Special Burger</div><div class="pop-cat">Signature</div></div><div class="pop-price">₹109</div></div></div>
+              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=80&h=80&fit=crop&crop=center" alt="Veg Frankie"></div><div class="pop-info"><div class="pop-name">SS Special Frankie</div><div class="pop-cat">Signature</div></div><div class="pop-price">₹149</div></div></div>
+              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=80&h=80&fit=crop&crop=center" alt="Veg Cheese Burger"></div><div class="pop-info"><div class="pop-name">Cheese Blast Burger</div><div class="pop-cat">Signature Burger</div></div><div class="pop-price">₹159</div></div></div>
+              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=80&h=80&fit=crop&crop=center" alt="French Fries"></div><div class="pop-info"><div class="pop-name">Cheesy French Fries</div><div class="pop-cat">Fries & Nuggets</div></div><div class="pop-price">₹119</div></div></div>
+              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=80&h=80&fit=crop&crop=center" alt="Veg Sandwich"></div><div class="pop-info"><div class="pop-name">SS Special Sandwich</div><div class="pop-cat">Signature Sandwich</div></div><div class="pop-price">₹199</div></div></div>
             </div>
           </div>
         </div>
@@ -182,7 +156,7 @@
     <div class="stats-row">
       <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">80+</div><div class="stat-label">Menu Items</div></div></div>
       <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">8</div><div class="stat-label">Categories</div></div></div>
-      <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">7hrs</div><div class="stat-label">Open Nightly</div></div></div>
+      <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">7 hr</div><div class="stat-label">Open Nightly</div></div></div>
       <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">₹69</div><div class="stat-label">Starts From</div></div></div>
     </div>
   </section>
@@ -195,91 +169,12 @@
       <p class="sec-sub">Handcrafted with love — fresh every night 🌿 Pure Veg</p>
     </div>
     <div class="gallery-grid">
-
-      <!-- 🍔 Burger -->
-      <div class="glass-card gallery-card" onclick="goToMenu('burger')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=280&fit=crop&crop=center" alt="Veg Burger" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">11 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🍔</span>
-          <div class="gallery-info"><div class="gallery-name">Burger</div><div class="gallery-range">₹69 – ₹109</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
-      <!-- 🌯 Frankie -->
-      <div class="glass-card gallery-card" onclick="goToMenu('frankie')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=280&fit=crop&crop=center" alt="Veg Frankie" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">12 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🌯</span>
-          <div class="gallery-info"><div class="gallery-name">Frankie</div><div class="gallery-range">₹99 – ₹149</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
-      <!-- 🥪 Sandwich -->
-      <div class="glass-card gallery-card" onclick="goToMenu('sandwich')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&h=280&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">13 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🥪</span>
-          <div class="gallery-info"><div class="gallery-name">Sandwich</div><div class="gallery-range">₹79 – ₹139</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
-      <!-- 🍟 Fries -->
-      <div class="glass-card gallery-card" onclick="goToMenu('fries')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&h=280&fit=crop&crop=center" alt="French Fries" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">6 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🍟</span>
-          <div class="gallery-info"><div class="gallery-name">Fries & Nuggets</div><div class="gallery-range">₹79 – ₹129</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
-      <!-- 🍜 Maggie -->
-      <div class="glass-card gallery-card" onclick="goToMenu('maggie')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=500&h=280&fit=crop&crop=center" alt="Veg Maggie Noodles" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">7 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🍜</span>
-          <div class="gallery-info"><div class="gallery-name">Maggie</div><div class="gallery-range">₹79 – ₹149</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
-      <!-- 🫓 Tikka Pav -->
-      <div class="glass-card gallery-card" onclick="goToMenu('tikka')">
-        <div class="card-surface"></div>
-        <div class="gallery-img-wrap">
-          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&h=280&fit=crop&crop=center" alt="Tikka Pav" loading="lazy">
-          <div class="gallery-img-overlay"><span class="gallery-count glass-card">8 items</span></div>
-        </div>
-        <div class="card-inner gallery-body">
-          <span class="gallery-emoji">🫓</span>
-          <div class="gallery-info"><div class="gallery-name">Tikka Pav</div><div class="gallery-range">₹129 – ₹149</div></div>
-          <span class="gallery-arrow">›</span>
-        </div>
-      </div>
-
+      <div class="glass-card gallery-card" onclick="goToMenu('burger')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=280&fit=crop&crop=center" alt="Veg Burger" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">11 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍔</span><div class="gallery-info"><div class="gallery-name">Burger</div><div class="gallery-range">₹69 – ₹109</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('frankie')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=280&fit=crop&crop=center" alt="Veg Frankie" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">12 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🌯</span><div class="gallery-info"><div class="gallery-name">Frankie</div><div class="gallery-range">₹99 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('sandwich')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&h=280&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">13 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🥪</span><div class="gallery-info"><div class="gallery-name">Sandwich</div><div class="gallery-range">₹79 – ₹139</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('fries')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&h=280&fit=crop&crop=center" alt="French Fries" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">6 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍟</span><div class="gallery-info"><div class="gallery-name">Fries & Nuggets</div><div class="gallery-range">₹79 – ₹129</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('maggie')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=500&h=280&fit=crop&crop=center" alt="Veg Maggie" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">7 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍜</span><div class="gallery-info"><div class="gallery-name">Maggie</div><div class="gallery-range">₹79 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('tikka')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&h=280&fit=crop&crop=center" alt="Tikka Pav" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">8 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🫓</span><div class="gallery-info"><div class="gallery-name">Tikka Pav</div><div class="gallery-range">₹129 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
     </div>
   </section>
 
@@ -302,7 +197,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="glass-card tab-strip">
+    <div class="glass-card tab-strip" id="tabStrip">
       <div class="card-surface"></div>
       <div class="card-inner tab-inner">
         <div class="menu-tab active" onclick="showCat('all',this)">All <span class="tab-cnt">80+</span></div>
@@ -317,17 +212,30 @@
       </div>
     </div>
 
+    <!-- ✅ PRICE FILTER — inside menu section after tabs -->
+    <div class="price-filter-wrap glass-card">
+      <div class="card-surface"></div>
+      <div class="card-inner price-filter-inner">
+        <span class="price-filter-label">💰 Filter:</span>
+        <button class="price-filter-btn price-filter-active" data-range="all" onclick="setPriceFilter('all',this)">All</button>
+        <button class="price-filter-btn" data-range="budget" onclick="setPriceFilter('budget',this)">₹69–₹99</button>
+        <button class="price-filter-btn" data-range="mid" onclick="setPriceFilter('mid',this)">₹100–₹149</button>
+        <button class="price-filter-btn" data-range="premium" onclick="setPriceFilter('premium',this)">₹150+</button>
+      </div>
+    </div>
+
+    <!-- ✅ DOWNLOAD MENU — inside menu section -->
+    <div class="download-wrap">
+      <button class="btn btn-glass download-menu-btn" onclick="downloadMenu()">📥 Download Menu</button>
+    </div>
+
     <!-- ── BURGER ── -->
     <div class="menu-cat visible" data-cat="burger">
       <div class="cat-head">
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🍔</div></div>
         <div><div class="cat-name">Burger</div><div class="cat-sub-text">11 items · Starts at ₹69</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1100&h=200&fit=crop&crop=center" alt="Veg Burger" loading="lazy">
-        <div class="cat-banner-label card-inner">🍔 Fresh Veg Burgers — Made to Order</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1100&h=200&fit=crop&crop=center" alt="Veg Burger" loading="lazy"><div class="cat-banner-label card-inner">🍔 Fresh Veg Burgers — Made to Order</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Classic Burger</span></div><span class="item-price">₹69</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Aloo Tikki Burger</span></div><span class="item-price">₹79</span></div></div>
@@ -366,11 +274,7 @@
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🍟</div></div>
         <div><div class="cat-name">Fries & Nuggets</div><div class="cat-sub-text">6 items · Starts at ₹79</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=1100&h=200&fit=crop&crop=center" alt="French Fries" loading="lazy">
-        <div class="cat-banner-label card-inner">🍟 Crispy Fries & Golden Nuggets</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=1100&h=200&fit=crop&crop=center" alt="French Fries" loading="lazy"><div class="cat-banner-label card-inner">🍟 Crispy Fries & Golden Nuggets</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Plain French Fries</span></div><span class="item-price">₹79</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Peri Peri French Fries</span></div><span class="item-price">₹99</span></div></div>
@@ -387,11 +291,7 @@
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🌯</div></div>
         <div><div class="cat-name">Frankie</div><div class="cat-sub-text">12 items · Starts at ₹99</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=1100&h=200&fit=crop&crop=center" alt="Veg Frankie" loading="lazy">
-        <div class="cat-banner-label card-inner">🌯 Rolled Fresh — Packed with Flavour</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=1100&h=200&fit=crop&crop=center" alt="Veg Frankie" loading="lazy"><div class="cat-banner-label card-inner">🌯 Rolled Fresh — Packed with Flavour</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Veggie Delight</span></div><span class="item-price">₹99</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Pizzeria</span></div><span class="item-price">₹119</span></div></div>
@@ -414,11 +314,7 @@
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🫓</div></div>
         <div><div class="cat-name">Tikka Pav</div><div class="cat-sub-text">8 items · Starts at ₹129</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1100&h=200&fit=crop&crop=center" alt="Tikka Pav" loading="lazy">
-        <div class="cat-banner-label card-inner">🫓 Spicy Tikka Pav — Street Style</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1100&h=200&fit=crop&crop=center" alt="Tikka Pav" loading="lazy"><div class="cat-banner-label card-inner">🫓 Spicy Tikka Pav — Street Style</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Peri Peri Tikka Pav</span></div><span class="item-price">₹129</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Tandoori Tikka Pav</span></div><span class="item-price">₹129</span></div></div>
@@ -437,11 +333,7 @@
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🍜</div></div>
         <div><div class="cat-name">Maggie</div><div class="cat-sub-text">7 items · Starts at ₹79</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=1100&h=200&fit=crop&crop=center" alt="Veg Maggie" loading="lazy">
-        <div class="cat-banner-label card-inner">🍜 Comfort Food — Hot & Saucy</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=1100&h=200&fit=crop&crop=center" alt="Veg Maggie" loading="lazy"><div class="cat-banner-label card-inner">🍜 Comfort Food — Hot & Saucy</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Plain Maggie</span></div><span class="item-price">₹79</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Masala Maggie</span></div><span class="item-price">₹89</span></div></div>
@@ -459,11 +351,7 @@
         <div class="glass-card cat-icon-box"><div class="card-surface"></div><div class="card-inner">🥪</div></div>
         <div><div class="cat-name">Sandwich</div><div class="cat-sub-text">13 items · Starts at ₹79</div></div>
       </div>
-      <div class="glass-card cat-banner">
-        <div class="card-surface"></div>
-        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=1100&h=200&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy">
-        <div class="cat-banner-label card-inner">🥪 Grilled Fresh — Loaded with Flavour</div>
-      </div>
+      <div class="glass-card cat-banner"><div class="card-surface"></div><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=1100&h=200&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy"><div class="cat-banner-label card-inner">🥪 Grilled Fresh — Loaded with Flavour</div></div>
       <div class="menu-grid">
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Veg Sandwich</span></div><span class="item-price">₹79</span></div></div>
         <div class="glass-card menu-item"><div class="card-surface"></div><div class="card-inner item-inner"><div class="item-left"><div class="veg-dot"></div><span class="item-name">Veg Cheese Sandwich</span></div><span class="item-price">₹119</span></div></div>
@@ -556,7 +444,11 @@
           <div class="map-wrap">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Snack Station Location"></iframe>
           </div>
-          <a href="https://www.google.com/maps/search/Kalpesh+Rang+Upvan+Society+Opp+Abhishek+Xerox+Vejalpur+Ahmedabad+380051" target="_blank" class="glass-card map-btn"><div class="card-surface"></div><div class="card-inner">🗺 Open in Google Maps</div></a>
+          <!-- ✅ Map button opens popup instead of external link -->
+          <button onclick="openMapsPopup()" class="glass-card map-btn">
+            <div class="card-surface"></div>
+            <div class="card-inner">🗺 View Full Map</div>
+          </button>
         </div>
       </div>
 
@@ -594,13 +486,57 @@
     </div>
   </footer>
 
+</div><!-- end main-content -->
+
+<!-- ═══ FLOATING ELEMENTS ═══ -->
+
+<!-- Scroll Top -->
+<button class="scroll-top glass-card" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <div class="card-surface"></div>
+  <div class="card-inner">↑</div>
+</button>
+
+<!-- Toast -->
+<div class="toast glass-card" id="toast">
+  <div class="card-surface"></div>
+  <div class="card-inner" id="toastMsg"></div>
 </div>
 
-<!-- SCROLL TOP -->
-<button class="scroll-top glass-card" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="card-surface"></div><div class="card-inner">↑</div></button>
+<!-- Favourites Panel -->
+<div id="favPanel" class="fav-panel">
+  <div class="fav-panel-inner glass-card">
+    <div class="card-surface"></div>
+    <div class="card-inner">
+      <div class="fav-panel-head">
+        <h3>❤️ My Favourites</h3>
+        <button onclick="closeFavPanel()" class="fav-close-btn">✕</button>
+      </div>
+      <div id="favList" class="fav-list"></div>
+      <button onclick="closeFavPanel()" class="btn btn-solid" style="width:100%;margin-top:16px;justify-content:center;">Done</button>
+    </div>
+  </div>
+</div>
 
-<!-- TOAST -->
-<div class="toast glass-card" id="toast"><div class="card-surface"></div><div class="card-inner" id="toastMsg"></div></div>
+<!-- Maps Popup -->
+<div id="mapsPopup" class="maps-popup-overlay" onclick="if(event.target===this)closeMapsPopup()">
+  <div class="maps-popup-box glass-card">
+    <div class="card-surface"></div>
+    <div class="card-inner maps-popup-inner">
+      <div class="maps-popup-head">
+        <h3>📍 Snack Station Location</h3>
+        <button onclick="closeMapsPopup()" class="maps-close-btn">✕</button>
+      </div>
+      <div class="maps-popup-address">📌 Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051</div>
+      <div class="maps-iframe-wrap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="maps-popup-btns">
+        <a href="https://www.google.com/maps/search/Kalpesh+Rang+Upvan+Society+Opp+Abhishek+Xerox+Vejalpur+Ahmedabad+380051" target="_blank" class="btn btn-solid">🗺 Open in Google Maps</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Snack+Station+Vejalpur+Ahmedabad" target="_blank" class="btn btn-accent">🧭 Get Directions</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
