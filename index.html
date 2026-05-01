@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHANEka Thikana – Snack Station</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-scene">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="streak streak-1"></div>
+  <div class="streak streak-2"></div>
+</div>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="nav-logo-icon">🍔</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-sub">KHANEka Thikana</span>
+      <span class="nav-brand-main">SNACK STATION</span>
+    </div>
+  </div>
+  <a href="#home" onclick="closeMobileNav()">🏠 Home</a>
+  <a href="#menu" onclick="closeMobileNav()">📋 Menu</a>
+  <a href="#info" onclick="closeMobileNav()">📍 Info</a>
+  <a href="#contact" onclick="closeMobileNav()">📞 Contact</a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-icon">🍔</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-sub">KHANEka Thikana</span>
+      <span class="nav-brand-main">SNACK STATION</span>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active" onclick="setNavActive(this)">Home</a></li>
+    <li><a href="#menu" onclick="setNavActive(this)">Menu</a></li>
+    <li><a href="#info" onclick="setNavActive(this)">Info</a></li>
+    <li><a href="#contact" onclick="setNavActive(this)">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-timing">
+      <span class="timing-dot"></span>
+      8 PM – 3 AM
+    </div>
+    <a href="tel:8460891897" class="nav-call">📞 Call Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main-content">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero-section" id="home">
+    <div class="hero-inner">
+
+      <!-- Left Text -->
+      <div class="hero-text">
+        <div class="hero-badge anim">
+          <span class="badge-dot"></span>
+          Night Food Station
+        </div>
+        <p class="hero-tagline anim d1">KHANEka Thikana</p>
+        <h1 class="hero-name anim d2">
+          <span class="name-grad">SNACK</span><br>STATION
+        </h1>
+        <p class="hero-desc anim d3">
+          Your favorite late-night food destination in Vejalpur, Ahmedabad.
+          Burgers, Frankies, Sandwiches, Fries & more — fresh and hot, every night!
+        </p>
+        <div class="hero-chips anim d3">
+          <div class="chip chip-green">
+            <span class="chip-dot"></span> Open · 8 PM to 3 AM
+          </div>
+          <div class="chip">📍 Vejalpur, Ahmedabad</div>
+          <div class="chip">🌿 Pure Veg</div>
+        </div>
+        <div class="hero-btns anim d4">
+          <a href="#menu" class="btn btn-solid">📋 View Menu</a>
+          <a href="tel:8460891897" class="btn btn-accent">📞 Order Now</a>
+          <a href="https://instagram.com/snack_station84" target="_blank" class="btn btn-glass">📸 Instagram</a>
+        </div>
+      </div>
+
+      <!-- Right Card -->
+      <div class="hero-visual anim d3">
+        <div class="glass-card hero-card">
+          <div class="card-surface"></div>
+          <div class="card-inner">
+            <div class="hero-card-tag">⭐ Popular Items</div>
+            <div class="hero-card-title">Tonight's Favorites</div>
+            <div class="popular-list">
+
+              <div class="popular-item">
+                <div class="pop-left">
+                  <div class="pop-emoji-box">🍔</div>
+                  <div class="pop-info">
+                    <div class="pop-name">SS Special Burger</div>
+                    <div class="pop-cat">Signature</div>
+                  </div>
+                </div>
+                <div class="pop-price">₹109</div>
+              </div>
+
+              <div class="popular-item">
+                <div class="pop-left">
+                  <div class="pop-emoji-box">🌯</div>
+                  <div class="pop-info">
+                    <div class="pop-name">SS Special Frankie</div>
+                    <div class="pop-cat">Signature</div>
+                  </div>
+                </div>
+                <div class="pop-price">₹149</div>
+              </div>
+
+              <div class="popular-item">
+                <div class="pop-left">
+                  <div class="pop-emoji-box">🧀</div>
+                  <div class="pop-info">
+                    <div class="pop-name">Cheese Blast Burger</div>
+                    <div class="pop-cat">Signature Burger</div>
+                  </div>
+                </div>
+                <div class="pop-price">₹159</div>
+              </div>
+
+              <div class="popular-item">
+                <div class="pop-left">
+                  <div class="pop-emoji-box">🍟</div>
+                  <div class="pop-info">
+                    <div class="pop-name">Cheesy French Fries</div>
+                    <div class="pop-cat">Fries & Nuggets</div>
+                  </div>
+                </div>
+                <div class="pop-price">₹119</div>
+              </div>
+
+              <div class="popular-item">
+                <div class="pop-left">
+                  <div class="pop-emoji-box">🥪</div>
+                  <div class="pop-info">
+                    <div class="pop-name">SS Special Sandwich</div>
+                    <div class="pop-cat">Signature Sandwich</div>
+                  </div>
+                </div>
+                <div class="pop-price">₹199</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== MENU ===== -->
+  <section id="menu">
+    <div class="sec-header">
+      <div class="sec-tag">📋 Menu</div>
+      <h2 class="sec-title">Snack Station Menu</h2>
+      <p class="sec-sub">Everything fresh, hot & delicious — served from 8 PM to 3 AM every night</p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="menu-tabs" id="menuTabs">
+      <div class="menu-tab active" onclick="showCat('all',this)">All <span class="tab-cnt">80+</span></div>
+      <div class="menu-tab" onclick="showCat('burger',this)">🍔 Burger</div>
+      <div class="menu-tab" onclick="showCat('sig-burger',this)">⭐ Sig. Burger</div>
+      <div class="menu-tab" onclick="showCat('fries',this)">🍟 Fries</div>
+      <div class="menu-tab" onclick="showCat('frankie',this)">🌯 Frankie</div>
+      <div class="menu-tab" onclick="showCat('tikka',this)">🫓 Tikka Pav</div>
+      <div class="menu-tab" onclick="showCat('maggie',this)">🍜 Maggie</div>
+      <div class="menu-tab" onclick="showCat('sandwich',this)">🥪 Sandwich</div>
+      <div class="menu-tab" onclick="showCat('sig-sandwich',this)">⭐ Sig. Sandwich</div>
+    </div>
+
+    <!-- BURGER -->
+    <div class="menu-cat visible" data-cat="burger">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🍔</div>
+        <div>
+          <div class="cat-name">Burger</div>
+          <div class="cat-sub">11 items · Starts at ₹69</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Classic Burger</span></div><span class="item-price">₹69</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Aloo Tikki Burger</span></div><span class="item-price">₹79</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Harrisa Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">South West Chipotle Burger</span></div><span class="item-price">₹99</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Spicy Schezwan Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Achari Masti Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Pizzeria Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Hot & Spicy Chilly Garlic Burger</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Snack Station Special Burger</span></div><span class="item-price">₹109</span><span class="sp-badge">Special</span></div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE BURGER -->
+    <div class="menu-cat visible" data-cat="sig-burger">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">⭐</div>
+        <div>
+          <div class="cat-name">Signature Burger</div>
+          <div class="cat-sub">6 items · Cheese Blast Series</div>
+        </div>
+      </div>
+      <div class="sig-label">🧀 Cheese Blast Collection</div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Aloo Tikki Cheese Blast Burger</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri Cheese Blast Burger</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Cheese Blast Burger</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Achari Masti Cheese Blast Burger</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Spicy Schezwan Cheese Blast Burger</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">SS Special Cheese Blast Burger</span></div><span class="item-price">₹159</span><span class="sp-badge">⭐ Best</span></div>
+      </div>
+    </div>
+
+    <!-- FRIES & NUGGETS -->
+    <div class="menu-cat visible" data-cat="fries">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🍟</div>
+        <div>
+          <div class="cat-name">Fries & Nuggets</div>
+          <div class="cat-sub">6 items · Starts at ₹79</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Plain French Fries</span></div><span class="item-price">₹79</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri French Fries</span></div><span class="item-price">₹99</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheesy French Fries</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheesy Stick</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Jalapeno Cheese Nuggets (5 pcs)</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheesy Coin (5 pcs)</span></div><span class="item-price">₹129</span></div>
+      </div>
+    </div>
+
+    <!-- FRANKIE -->
+    <div class="menu-cat visible" data-cat="frankie">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🌯</div>
+        <div>
+          <div class="cat-name">Frankie</div>
+          <div class="cat-sub">12 items · Starts at ₹99</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veggie Delight</span></div><span class="item-price">₹99</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Pizzeria</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Corn Delight</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Paneer Delight</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheese Chilly Corn</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheese Chilly Paneer</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Spicy Schezwan</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Tadka</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Smokey Barbeque</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Chipotle</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Snack Station Special Frankie</span></div><span class="item-price">₹149</span><span class="sp-badge">Special</span></div>
+      </div>
+    </div>
+
+    <!-- TIKKA PAV -->
+    <div class="menu-cat visible" data-cat="tikka">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🫓</div>
+        <div>
+          <div class="cat-name">Tikka Pav</div>
+          <div class="cat-sub">8 items · Starts at ₹129</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Spicy Schezwan Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Hot & Chilly Garlic Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Pizzeria Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Achari Masti Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Thousand Tikka Pav</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Snack Station Special Tikka Pav</span></div><span class="item-price">₹149</span><span class="sp-badge">Special</span></div>
+      </div>
+    </div>
+
+    <!-- MAGGIE -->
+    <div class="menu-cat visible" data-cat="maggie">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🍜</div>
+        <div>
+          <div class="cat-name">Maggie</div>
+          <div class="cat-sub">7 items · Starts at ₹79</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Plain Maggie</span></div><span class="item-price">₹79</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Masala Maggie</span></div><span class="item-price">₹89</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Maggie</span></div><span class="item-price">₹99</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tadka Maggie</span></div><span class="item-price">₹109</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Tadka Maggie</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Cheese Maggie</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Tadka Cheese Maggie</span></div><span class="item-price">₹149</span><span class="sp-badge">Premium</span></div>
+      </div>
+    </div>
+
+    <!-- SANDWICH -->
+    <div class="menu-cat visible" data-cat="sandwich">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">🥪</div>
+        <div>
+          <div class="cat-name">Sandwich</div>
+          <div class="cat-sub">13 items · Starts at ₹79</div>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Sandwich</span></div><span class="item-price">₹79</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Veg Cheese Sandwich</span></div><span class="item-price">₹119</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Cheese Chutney Sandwich</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Coleslaw Sandwich</span></div><span class="item-price">₹129</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Hot & Spicy Chilly Garlic Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Spicy Schezwan Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Pizzeria Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Afghani Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Achari Masti Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Thousand Sandwich</span></div><span class="item-price">₹139</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Chipotle Sandwich</span></div><span class="item-price">₹139</span></div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE SANDWICH -->
+    <div class="menu-cat visible" data-cat="sig-sandwich">
+      <div class="cat-header">
+        <div class="cat-icon glass-icon">⭐</div>
+        <div>
+          <div class="cat-name">Signature Sandwich</div>
+          <div class="cat-sub">5 items · Premium Collection</div>
+        </div>
+      </div>
+      <div class="sig-label">👑 Premium Signature Series</div>
+      <div class="menu-grid">
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Maggie Masala Sandwich</span></div><span class="item-price">₹169</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Tandoori Paneer Sandwich</span></div><span class="item-price">₹179</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Peri Peri Paneer Sandwich</span></div><span class="item-price">₹179</span></div>
+        <div class="menu-item glass-item"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Afghani Paneer Sandwich</span></div><span class="item-price">₹179</span></div>
+        <div class="menu-item glass-item item-special"><div class="item-l"><div class="veg-dot"></div><span class="item-name">Snack Station Special Sandwich</span></div><span class="item-price">₹199</span><span class="sp-badge">⭐ Best</span></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section style="padding-top:0; padding-bottom: 40px;">
+    <div class="glass-card cta-card">
+      <div class="card-surface"></div>
+      <div class="card-inner cta-inner">
+        <div class="cta-text">
+          <h3>🌙 Craving Late Night Snacks?</h3>
+          <p>Open every night · 8:00 PM to 3:00 AM · Vejalpur, Ahmedabad</p>
+        </div>
+        <div class="cta-btns">
+          <a href="tel:8460891897" class="btn btn-solid">📞 8460891897</a>
+          <a href="tel:9081081033" class="btn btn-accent">📞 9081081033</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INFO & CONTACT ===== -->
+  <section id="info">
+    <div class="sec-header">
+      <div class="sec-tag">📍 Info & Contact</div>
+      <h2 class="sec-title">Visit Us Tonight</h2>
+      <p class="sec-sub">Find us in Vejalpur, Ahmedabad — open every night!</p>
+    </div>
+
+    <div class="info-grid" id="contact">
+
+      <div class="glass-card info-card">
+        <div class="card-surface"></div>
+        <div class="card-inner">
+          <div class="info-icon icon-green">🕐</div>
+          <h4 class="info-title">Opening Hours</h4>
+          <div class="info-rows">
+            <div class="info-row"><span>🌙</span> Night Food Service</div>
+            <div class="info-row green-row"><span>⏰</span> <strong>8:00 PM to 3:00 AM</strong></div>
+            <div class="info-row"><span>📅</span> Open Every Night</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card info-card">
+        <div class="card-surface"></div>
+        <div class="card-inner">
+          <div class="info-icon icon-orange">📍</div>
+          <h4 class="info-title">Our Location</h4>
+          <div class="info-rows">
+            <div class="info-row"><span>🏪</span> Kalpesh Rang</div>
+            <div class="info-row"><span>🏘</span> Upvan Society</div>
+            <div class="info-row"><span>📌</span> Opp Abhishek Xerox</div>
+            <div class="info-row"><span>🌆</span> Vejalpur, Ahmedabad</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card info-card">
+        <div class="card-surface"></div>
+        <div class="card-inner">
+          <div class="info-icon icon-red">📞</div>
+          <h4 class="info-title">Contact Us</h4>
+          <div class="info-rows">
+            <div class="info-row"><span>📱</span> <a href="tel:8460891897">8460891897</a></div>
+            <div class="info-row"><span>📱</span> <a href="tel:9081081033">9081081033</a></div>
+            <div class="info-row"><span>💬</span> WhatsApp Available</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card info-card insta-card">
+        <div class="card-surface"></div>
+        <div class="card-inner">
+          <div class="info-icon icon-insta">📸</div>
+          <h4 class="info-title">Follow Us</h4>
+          <div class="info-rows">
+            <div class="info-row"><span>📱</span> Daily updates & new items</div>
+            <div class="info-row"><span>🎉</span> Special offers & events</div>
+          </div>
+          <a href="https://instagram.com/snack_station84" target="_blank" class="insta-handle">
+            📸 @snack_station84
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo-icon" style="width:28px;height:28px;font-size:13px;">🍔</div>
+        <span class="footer-name">SNACK STATION</span>
+      </div>
+      <p class="footer-copy">KHANEka Thikana · Vejalpur, Ahmedabad · Open 8PM – 3AM</p>
+      <div class="footer-links">
+        <a href="tel:8460891897" class="foot-link">📞</a>
+        <a href="https://instagram.com/snack_station84" target="_blank" class="foot-link">📸</a>
+        <a href="#menu" class="foot-link">📋</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end main-content -->
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="script.js"></script>
+</body>
+</html>
