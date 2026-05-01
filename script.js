@@ -1,11 +1,55 @@
 'use strict';
 
 /* ═══════════════════════════════════════════
+   CACHE DOM ELEMENTS — query once, reuse
+═══════════════════════════════════════════ */
+const DOM = {
+  navbar:       null,
+  scrollTop:    null,
+  mobileNav:    null,
+  overlay:      null,
+  hamburger:    null,
+  menuSearch:   null,
+  searchClear:  null,
+  noResults:    null,
+  searchTerm:   null,
+  toast:        null,
+  toastMsg:     null,
+  heroSection:  null,
+  navLinks:     [],
+  menuTabs:     [],
+  menuCats:     [],
+  menuItems:    [],
+  sections:     [],
+};
+
+/* Initialize DOM cache after page load */
+function initDOM() {
+  DOM.navbar      = document.getElementById('navbar');
+  DOM.scrollTop   = document.getElementById('scrollTop');
+  DOM.mobileNav   = document.getElementById('mobileNav');
+  DOM.overlay     = document.getElementById('overlay');
+  DOM.hamburger   = document.getElementById('hamburger');
+  DOM.menuSearch  = document.getElementById('menuSearch');
+  DOM.searchClear = document.getElementById('searchClear');
+  DOM.noResults   = document.getElementById('noResults');
+  DOM.searchTerm  = document.getElementById('searchTerm');
+  DOM.toast       = document.getElementById('toast');
+  DOM.toastMsg    = document.getElementById('toastMsg');
+  DOM.heroSection = document.querySelector('.hero-section');
+
+  DOM.navLinks  = Array.from(document.querySelectorAll('.nav-link'));
+  DOM.menuTabs  = Array.from(document.querySelectorAll('.menu-tab'));
+  DOM.menuCats  = Array.from(document.querySelectorAll('.menu-cat'));
+  DOM.menuItems = Array.from(document.querySelectorAll('.menu-item'));
+  DOM.sections  = Array.from(document.querySelectorAll('section[id]'));
+}
+
+/* ═══════════════════════════════════════════
    NAV ACTIVE
 ═══════════════════════════════════════════ */
 function setNavActive(el) {
-  document.querySelectorAll('.nav-link')
-    .forEach(a => a.classList.remove('active'));
+  DOM.navLinks.forEach(a => a.classList.remove('active'));
   el.classList.add('active');
 }
 
@@ -13,19 +57,16 @@ function setNavActive(el) {
    MOBILE NAV
 ═══════════════════════════════════════════ */
 function toggleMobileNav() {
-  const nav = document.getElementById('mobileNav');
-  const ov  = document.getElementById('overlay');
-  const hb  = document.getElementById('hamburger');
-  const open = nav.classList.toggle('open');
-  ov.classList.toggle('open', open);
-  hb.classList.toggle('open', open);
+  const open = DOM.mobileNav.classList.toggle('open');
+  DOM.overlay.classList.toggle('open', open);
+  DOM.hamburger.classList.toggle('open', open);
   document.body.style.overflow = open ? 'hidden' : '';
 }
 
 function closeMobileNav() {
-  document.getElementById('mobileNav').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
+  DOM.mobileNav.classList.remove('open');
+  DOM.overlay.classList.remove('open');
+  DOM.hamburger.classList.remove('open');
   document.body.style.overflow = '';
 }
 
@@ -33,222 +74,257 @@ function closeMobileNav() {
    MENU CATEGORY FILTER
 ═══════════════════════════════════════════ */
 function showCat(cat, tabEl) {
-  // Update tabs
-  document.querySelectorAll('.menu-tab')
-    .forEach(t => t.classList.remove('active'));
+  /* ── 1. Update tabs ── */
+  DOM.menuTabs.forEach(t => t.classList.remove('active'));
   if (tabEl) tabEl.classList.add('active');
 
-  // Clear any active search first
+  /* ── 2. Clear search ── */
   _clearSearchState();
 
-  // Show / hide categories
-  document.querySelectorAll('.menu-cat').forEach(c => {
-    const show = cat === 'all' || c.dataset.cat === cat;
-    c.classList.toggle('visible', show);
+  /* ── 3. Show/hide categories using RAF ── */
+  const isAll = cat === 'all';
 
-    // Reset display so CSS controls visibility properly
-    c.style.display = '';
+  requestAnimationFrame(() => {
+    DOM.menuCats.forEach(c => {
+      const show = isAll || c.dataset.cat === cat;
+      c.classList.toggle('visible', show);
+      c.style.display = '';
 
-    // Reset all items inside
-    c.querySelectorAll('.menu-item').forEach(item => {
-      item.classList.remove('hl', 'dim');
-      item.style.display = '';
+      /* Reset items inside */
+      c.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('hl', 'dim');
+        item.style.display   = '';
+        item.style.animation = '';
+      });
     });
+
+    /* ── 4. Stagger animation — only visible items ── */
+    let delay = 0;
+    document.querySelectorAll('.menu-cat.visible .menu-item')
+      .forEach(item => {
+        item.style.animation = 'none';
+        void item.offsetWidth;
+        item.style.animation =
+          `fu .30s ${delay.toFixed(3)}s cubic-bezier(.22,1,.36,1) both`;
+        delay += 0.020;
+      });
   });
-
-  // Stagger animation on visible items
-  let delay = 0;
-  document.querySelectorAll('.menu-cat.visible .menu-item')
-    .forEach(item => {
-      item.style.animation = 'none';
-      void item.offsetWidth; // reflow
-      item.style.animation =
-        `fu .32s ${delay}s cubic-bezier(.22,1,.36,1) both`;
-      delay += 0.022;
-    });
 }
 
 /* ═══════════════════════════════════════════
-   GO TO MENU FROM GALLERY / FOOD PILLS
+   GO TO MENU
 ═══════════════════════════════════════════ */
+const MENU_MAP = {
+  'burger':       1,
+  'sig-burger':   2,
+  'fries':        3,
+  'frankie':      4,
+  'tikka':        5,
+  'maggie':       6,
+  'sandwich':     7,
+  'sig-sandwich': 8
+};
+
 function goToMenu(cat) {
   const sec = document.getElementById('menu');
   if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const MAP = {
-    'burger':       1,
-    'sig-burger':   2,
-    'fries':        3,
-    'frankie':      4,
-    'tikka':        5,
-    'maggie':       6,
-    'sandwich':     7,
-    'sig-sandwich': 8
-  };
+  const idx = MENU_MAP[cat];
+  if (idx === undefined) return;
 
   setTimeout(() => {
-    const tabs = document.querySelectorAll('.menu-tab');
-    const idx  = MAP[cat];
-    if (idx !== undefined && tabs[idx]) {
-      showCat(cat, tabs[idx]);
-    }
-  }, 640);
+    const tab = DOM.menuTabs[idx];
+    if (tab) showCat(cat, tab);
+  }, 600);
 }
 
 /* ═══════════════════════════════════════════
-   SEARCH — FIXED
+   SEARCH — OPTIMIZED
+   Debounced + cached items
 ═══════════════════════════════════════════ */
+
+/* Pre-cache item names once */
+let _itemCache = null;
+
+function _buildItemCache() {
+  if (_itemCache) return;
+  _itemCache = DOM.menuItems.map(item => ({
+    el:   item,
+    name: (item.querySelector('.item-name')?.textContent || '').toLowerCase(),
+    cat:  item.closest('.menu-cat'),
+  }));
+}
+
+/* Debounce timer */
+let _searchTimer = null;
+
 function filterMenu(rawQuery) {
-  const q  = rawQuery.trim().toLowerCase();
-  const cb = document.getElementById('searchClear');
-  const nr = document.getElementById('noResults');
-  const ts = document.getElementById('searchTerm');
+  /* Show/hide clear button immediately */
+  if (DOM.searchClear) {
+    DOM.searchClear.style.display = rawQuery ? 'flex' : 'none';
+  }
 
-  // Toggle clear button visibility
-  if (cb) cb.style.display = q ? 'flex' : 'none';
+  /* Debounce — wait 180ms before processing */
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(() => _doSearch(rawQuery), 180);
+}
 
-  // If empty query, restore everything
+function _doSearch(rawQuery) {
+  const q = rawQuery.trim().toLowerCase();
+
   if (!q) {
     _clearSearchState();
     return;
   }
 
-  // Mark "All" tab active while searching
-  document.querySelectorAll('.menu-tab').forEach((t, i) => {
-    t.classList.toggle('active', i === 0);
+  /* Build cache first time */
+  _buildItemCache();
+
+  /* Mark "All" tab active */
+  DOM.menuTabs.forEach((t, i) => t.classList.toggle('active', i === 0));
+
+  /* Track hits per category */
+  const catHits = new Map();
+  DOM.menuCats.forEach(c => catHits.set(c, 0));
+
+  /* Classify items — batch DOM writes in RAF */
+  const matches    = [];
+  const nonMatches = [];
+
+  _itemCache.forEach(({ el, name, cat }) => {
+    if (name.includes(q)) {
+      matches.push(el);
+      catHits.set(cat, (catHits.get(cat) || 0) + 1);
+    } else {
+      nonMatches.push(el);
+    }
   });
 
-  let totalHits = 0;
+  const totalHits = matches.length;
 
-  document.querySelectorAll('.menu-cat').forEach(cat => {
-    let catHits = 0;
-    const items = cat.querySelectorAll('.menu-item');
-
-    items.forEach(item => {
-      // item-name lives inside:  .menu-item > .card-inner > .item-inner > .item-left > .item-name
-      const nameEl = item.querySelector('.item-name');
-      const name   = (nameEl ? nameEl.textContent : '').toLowerCase();
-      const match  = name.includes(q);
-
-      // Highlight matching / dim non-matching
-      item.classList.toggle('hl',  match);
-      item.classList.toggle('dim', !match);
-
-      // Keep item in DOM flow (display handled by class)
-      item.style.display = '';
-
-      if (match) catHits++;
+  /* Batch all DOM writes in one RAF frame */
+  requestAnimationFrame(() => {
+    /* Items */
+    matches.forEach(el => {
+      el.classList.add('hl');
+      el.classList.remove('dim');
+      el.style.display = '';
+    });
+    nonMatches.forEach(el => {
+      el.classList.remove('hl');
+      el.classList.add('dim');
+      el.style.display = '';
     });
 
-    // Show category only if it has at least one matching item
-    if (catHits > 0) {
-      cat.classList.add('visible');
-      cat.style.display = '';
-    } else {
-      cat.classList.remove('visible');
-      cat.style.display = 'none';
+    /* Categories */
+    DOM.menuCats.forEach(c => {
+      const hits = catHits.get(c) || 0;
+      if (hits > 0) {
+        c.classList.add('visible');
+        c.style.display = '';
+      } else {
+        c.classList.remove('visible');
+        c.style.display = 'none';
+      }
+    });
+
+    /* No results */
+    if (DOM.noResults) {
+      DOM.noResults.style.display = totalHits === 0 ? 'block' : 'none';
     }
-
-    totalHits += catHits;
+    if (DOM.searchTerm && totalHits === 0) {
+      DOM.searchTerm.textContent = rawQuery.trim();
+    }
   });
-
-  // No results block
-  if (nr) {
-    nr.style.display = totalHits === 0 ? 'block' : 'none';
-  }
-  if (ts && totalHits === 0) {
-    ts.textContent = rawQuery.trim();
-  }
 }
 
 /* ═══════════════════════════════════════════
    CLEAR SEARCH
 ═══════════════════════════════════════════ */
 function clearSearch() {
-  const inp = document.getElementById('menuSearch');
-  if (inp) inp.value = '';
+  clearTimeout(_searchTimer);
+  if (DOM.menuSearch) DOM.menuSearch.value = '';
   _clearSearchState();
 }
 
-/* ── Internal: reset all search-related state ── */
 function _clearSearchState() {
-  // Hide clear button
-  const cb = document.getElementById('searchClear');
-  if (cb) cb.style.display = 'none';
+  if (DOM.searchClear) DOM.searchClear.style.display = 'none';
+  if (DOM.noResults)   DOM.noResults.style.display   = 'none';
 
-  // Hide no-results block
-  const nr = document.getElementById('noResults');
-  if (nr) nr.style.display = 'none';
+  requestAnimationFrame(() => {
+    DOM.menuItems.forEach(item => {
+      item.classList.remove('hl', 'dim');
+      item.style.display = '';
+    });
 
-  // Remove highlight / dim from all items & restore display
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.classList.remove('hl', 'dim');
-    item.style.display = '';
-  });
+    DOM.menuCats.forEach(c => {
+      c.classList.add('visible');
+      c.style.display = '';
+    });
 
-  // Show all categories & remove forced inline display
-  document.querySelectorAll('.menu-cat').forEach(c => {
-    c.classList.add('visible');
-    c.style.display = '';
-  });
-
-  // Re-activate "All" tab
-  document.querySelectorAll('.menu-tab').forEach((t, i) => {
-    t.classList.toggle('active', i === 0);
+    DOM.menuTabs.forEach((t, i) => {
+      t.classList.toggle('active', i === 0);
+    });
   });
 }
 
 /* ═══════════════════════════════════════════
-   TOAST NOTIFICATION
+   TOAST — lightweight
 ═══════════════════════════════════════════ */
 let _toastTimer = null;
 
-function showToast(msg, duration = 2600) {
-  const toast   = document.getElementById('toast');
-  const msgEl   = document.getElementById('toastMsg');
-  if (!toast || !msgEl) return;
-
-  msgEl.textContent = msg;
-  toast.classList.add('show');
-
+function showToast(msg, duration = 2400) {
+  if (!DOM.toast || !DOM.toastMsg) return;
+  DOM.toastMsg.textContent = msg;
+  DOM.toast.classList.add('show');
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => {
-    toast.classList.remove('show');
-  }, duration);
+  _toastTimer = setTimeout(() => DOM.toast.classList.remove('show'), duration);
 }
 
 /* ═══════════════════════════════════════════
-   SCROLL EVENTS
+   SCROLL — throttled with RAF
 ═══════════════════════════════════════════ */
+let _scrollTicking = false;
+let _lastScrollY   = 0;
+
 window.addEventListener('scroll', () => {
-  const y = window.scrollY;
+  _lastScrollY = window.scrollY;
+  if (_scrollTicking) return;
 
-  // Scroll-to-top button visibility
-  const scrollBtn = document.getElementById('scrollTop');
-  if (scrollBtn) {
-    scrollBtn.classList.toggle('visible', y > 420);
-  }
+  requestAnimationFrame(() => {
+    _onScroll(_lastScrollY);
+    _scrollTicking = false;
+  });
 
-  // Active nav link highlight based on scroll position
-  const heroSection = document.querySelector('.hero-section');
-  const heroHeight  = heroSection ? heroSection.offsetHeight : 0;
-
-  if (y < heroHeight - 100) {
-    _highlightNav('#home');
-  } else {
-    document.querySelectorAll('section[id]').forEach(sec => {
-      const top    = sec.offsetTop - 120;
-      const bottom = top + sec.offsetHeight;
-      if (y >= top && y < bottom) {
-        _highlightNav('#' + sec.id);
-      }
-    });
-  }
+  _scrollTicking = true;
 }, { passive: true });
 
-/* ── Helper: highlight nav link by href ── */
+function _onScroll(y) {
+  /* Scroll-top button */
+  if (DOM.scrollTop) {
+    DOM.scrollTop.classList.toggle('visible', y > 400);
+  }
+
+  /* Active nav highlight */
+  const heroH = DOM.heroSection ? DOM.heroSection.offsetHeight : 0;
+
+  if (y < heroH - 100) {
+    _highlightNav('#home');
+    return;
+  }
+
+  for (const sec of DOM.sections) {
+    const top    = sec.offsetTop - 120;
+    const bottom = top + sec.offsetHeight;
+    if (y >= top && y < bottom) {
+      _highlightNav('#' + sec.id);
+      break;
+    }
+  }
+}
+
 function _highlightNav(href) {
-  document.querySelectorAll('.nav-link').forEach(a => {
+  DOM.navLinks.forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === href);
   });
 }
@@ -257,76 +333,100 @@ function _highlightNav(href) {
    KEYBOARD SHORTCUTS
 ═══════════════════════════════════════════ */
 document.addEventListener('keydown', e => {
-  const activeTag = document.activeElement.tagName;
-  const isTyping  = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+  const tag      = document.activeElement.tagName;
+  const isTyping = tag === 'INPUT' || tag === 'TEXTAREA';
 
-  // Press "/" to focus search bar
   if (e.key === '/' && !isTyping) {
     e.preventDefault();
-    const searchInput = document.getElementById('menuSearch');
-    const menuSection = document.getElementById('menu');
-
-    if (searchInput && menuSection) {
-      menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const menuSec = document.getElementById('menu');
+    if (DOM.menuSearch && menuSec) {
+      menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setTimeout(() => {
-        searchInput.focus();
+        DOM.menuSearch.focus();
         showToast('🔍 Search menu items…');
-      }, 450);
+      }, 420);
     }
   }
 
-  // Press "Escape" to clear search / close mobile nav
   if (e.key === 'Escape') {
     clearSearch();
-    const searchInput = document.getElementById('menuSearch');
-    if (searchInput) searchInput.blur();
+    DOM.menuSearch?.blur();
     closeMobileNav();
   }
 });
 
 /* ═══════════════════════════════════════════
-   INTERSECTION OBSERVER — Fade-up animations
+   INTERSECTION OBSERVER — fade-up animations
+   Uses single shared observer
 ═══════════════════════════════════════════ */
-const io = new IntersectionObserver(
+const _io = new IntersectionObserver(
   (entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity            = '1';
-        entry.target.style.animationPlayState = 'running';
-        io.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.style.opacity            = '1';
+      el.style.animationPlayState = 'running';
+      _io.unobserve(el);
     });
   },
-  {
-    threshold:   0.07,
-    rootMargin: '0px 0px -24px 0px'
-  }
+  { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
 );
 
-// Observe these elements for scroll-in animations
-document.querySelectorAll(
-  '.anim, .stat-card, .gallery-card, .info-card, .pop-item'
-).forEach(el => {
-  // Skip elements inside navbar or mobile nav
-  if (el.closest('.navbar') || el.closest('.mobile-nav')) return;
-
-  el.style.opacity            = '0';
-  el.style.animationPlayState = 'paused';
-  io.observe(el);
-});
+function _initAnimations() {
+  document.querySelectorAll(
+    '.anim, .stat-card, .gallery-card, .info-card, .pop-item'
+  ).forEach(el => {
+    if (el.closest('.navbar') || el.closest('.mobile-nav')) return;
+    el.style.opacity            = '0';
+    el.style.animationPlayState = 'paused';
+    _io.observe(el);
+  });
+}
 
 /* ═══════════════════════════════════════════
    SMOOTH ANCHOR SCROLL
+   Uses event delegation — 1 listener instead of many
 ═══════════════════════════════════════════ */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const href   = anchor.getAttribute('href');
-    const target = document.querySelector(href);
+document.addEventListener('click', e => {
+  const anchor = e.target.closest('a[href^="#"]');
+  if (!anchor) return;
 
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      closeMobileNav();
-    }
-  });
+  const href   = anchor.getAttribute('href');
+  const target = document.querySelector(href);
+  if (!target) return;
+
+  e.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  closeMobileNav();
 });
+
+/* ═══════════════════════════════════════════
+   LAZY IMAGE LOADING — native + fallback
+═══════════════════════════════════════════ */
+function _initLazyImages() {
+  /* Native lazy loading already set via loading="lazy" in HTML */
+  /* Add error fallback for broken images */
+  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.opacity = '0.3';
+    }, { once: true });
+  });
+}
+
+/* ═══════════════════════════════════════════
+   INIT — run everything after DOM is ready
+═══════════════════════════════════════════ */
+function init() {
+  initDOM();
+  _initAnimations();
+  _initLazyImages();
+  _buildItemCache(); /* Pre-build search cache on load */
+}
+
+/* DOMContentLoaded — fastest safe entry point */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  /* Already loaded (script at bottom of body) */
+  init();
+}
