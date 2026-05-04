@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!-- ═══ 1. PAGE LOADER (must be first) ═══ -->
+<!-- ═══ 1. PAGE LOADER ═══ -->
 <div id="pageLoader" class="page-loader">
   <div class="loader-content">
     <div class="loader-icon">🍔</div>
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<!-- ═══ 2. STATUS BAR (after loader, before bg) ═══ -->
+<!-- ═══ 2. STATUS BAR ═══ -->
 <div id="statusBar" class="status-bar status-open">
   🟢 We are OPEN right now — Order away!
 </div>
@@ -46,8 +46,8 @@
     </div>
   </div>
   <a href="#home"    onclick="closeMobileNav()">🏠 Home</a>
-  <a href="#menu"    onclick="closeMobileNav()">📋 Menu</a>
   <a href="#gallery" onclick="closeMobileNav()">🖼 Gallery</a>
+  <a href="#menu"    onclick="closeMobileNav()">📋 Menu</a>
   <a href="#info"    onclick="closeMobileNav()">📍 Info</a>
   <a href="#contact" onclick="closeMobileNav()">📞 Contact</a>
   <div class="mobile-nav-footer">
@@ -60,6 +60,7 @@
   <div class="glass-card nav-glass">
     <div class="card-surface"></div>
     <div class="nav-inner card-inner">
+
       <a href="#home" class="nav-brand">
         <div class="brand-icon">🍔</div>
         <div class="brand-text">
@@ -67,6 +68,7 @@
           <span class="brand-main">SNACK STATION</span>
         </div>
       </a>
+
       <ul class="nav-links" id="navLinks">
         <li><a href="#home"    class="nav-link active" onclick="setNavActive(this)">Home</a></li>
         <li><a href="#gallery" class="nav-link"        onclick="setNavActive(this)">Gallery</a></li>
@@ -74,20 +76,21 @@
         <li><a href="#info"    class="nav-link"        onclick="setNavActive(this)">Info</a></li>
         <li><a href="#contact" class="nav-link"        onclick="setNavActive(this)">Contact</a></li>
       </ul>
+
       <div class="nav-actions">
-        <div class="nav-badge">
+        <div class="nav-badge" id="navBadge">
           <span class="live-dot"></span> Open Now
         </div>
-        <!-- ✅ FAV BUTTON — inside nav-actions -->
-        <button class="fav-nav-btn glass-card" onclick="showFavourites()" title="My Favourites">
-          <div class="card-surface"></div>
-          <div class="card-inner">❤️ <span id="favCount" class="fav-count" style="display:none;">0</span></div>
+        <button class="fav-nav-btn" onclick="showFavourites()" title="My Favourites">
+          ❤️ <span id="favCount" class="fav-count" style="display:none;">0</span>
         </button>
         <a href="tel:8460891897" class="btn btn-solid btn-sm">📞 Call</a>
       </div>
+
       <button class="hamburger" id="hamburger" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>
+
     </div>
   </div>
 </nav>
@@ -95,9 +98,10 @@
 <!-- ═══ MAIN CONTENT ═══ -->
 <div class="main-content">
 
-  <!-- ═══ HERO ═══ -->
+  <!-- ═══════════ HERO ═══════════ -->
   <section class="hero-section" id="home">
     <div class="hero-wrap">
+
       <div class="hero-left">
         <div class="glass-card hero-badge">
           <div class="card-surface"></div>
@@ -106,52 +110,122 @@
             <span>Open · 8 PM to 3 AM · Vejalpur</span>
           </div>
         </div>
+
         <p class="hero-tagline">KHANEKA THIKANA</p>
         <h1 class="hero-name"><span class="grad-text">SNACK</span><br>STATION</h1>
         <p class="hero-desc">Your favourite late-night food destination in Vejalpur, Ahmedabad. Burgers, Frankies, Sandwiches, Fries & more — fresh and hot, every night!</p>
+
         <div class="chip-row">
-          <div class="glass-card chip"><div class="card-surface"></div><div class="card-inner chip-inner"><span class="live-dot green-dot"></span> Open · 8 PM – 3 AM</div></div>
-          <div class="glass-card chip"><div class="card-surface"></div><div class="card-inner chip-inner">📍 Vejalpur, Ahmedabad</div></div>
-          <div class="glass-card chip"><div class="card-surface"></div><div class="card-inner chip-inner">🌿 Pure Veg</div></div>
+          <div class="glass-card chip">
+            <div class="card-surface"></div>
+            <div class="card-inner chip-inner"><span class="live-dot green-dot"></span> Open · 8 PM – 3 AM</div>
+          </div>
+          <div class="glass-card chip">
+            <div class="card-surface"></div>
+            <div class="card-inner chip-inner">📍 Vejalpur, Ahmedabad</div>
+          </div>
+          <div class="glass-card chip">
+            <div class="card-surface"></div>
+            <div class="card-inner chip-inner">🌿 Pure Veg</div>
+          </div>
         </div>
+
         <div class="btn-row">
-          <a href="#menu" class="btn btn-solid">📋 View Menu</a>
-          <a href="tel:8460891897" class="btn btn-accent">📞 Order Now</a>
+          <a href="#menu"                class="btn btn-solid">📋 View Menu</a>
+          <a href="tel:8460891897"       class="btn btn-accent">📞 Order Now</a>
           <a href="https://instagram.com/snack_station84" target="_blank" class="btn btn-glass">📸 Instagram</a>
         </div>
+
         <div class="food-pills">
-          <div class="glass-card food-pill" onclick="goToMenu('burger')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🍔</span> Burger</div></div>
-          <div class="glass-card food-pill" onclick="goToMenu('frankie')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🌯</span> Frankie</div></div>
-          <div class="glass-card food-pill" onclick="goToMenu('sandwich')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🥪</span> Sandwich</div></div>
-          <div class="glass-card food-pill" onclick="goToMenu('fries')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🍟</span> Fries</div></div>
-          <div class="glass-card food-pill" onclick="goToMenu('maggie')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🍜</span> Maggie</div></div>
-          <div class="glass-card food-pill" onclick="goToMenu('tikka')"><div class="card-surface"></div><div class="card-inner pill-inner"><span>🫓</span> Tikka Pav</div></div>
+          <div class="glass-card food-pill" onclick="goToMenu('burger')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🍔</span> Burger</div>
+          </div>
+          <div class="glass-card food-pill" onclick="goToMenu('frankie')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🌯</span> Frankie</div>
+          </div>
+          <div class="glass-card food-pill" onclick="goToMenu('sandwich')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🥪</span> Sandwich</div>
+          </div>
+          <div class="glass-card food-pill" onclick="goToMenu('fries')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🍟</span> Fries</div>
+          </div>
+          <div class="glass-card food-pill" onclick="goToMenu('maggie')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🍜</span> Maggie</div>
+          </div>
+          <div class="glass-card food-pill" onclick="goToMenu('tikka')">
+            <div class="card-surface"></div>
+            <div class="card-inner pill-inner"><span>🫓</span> Tikka Pav</div>
+          </div>
         </div>
       </div>
 
-      <!-- ═══ POPULAR CARD ═══ -->
+      <!-- Popular Card -->
       <div class="hero-right">
         <div class="glass-card popular-card">
           <div class="card-surface"></div>
           <div class="card-inner">
             <div class="popular-head">
-              <div class="glass-card pop-tag"><div class="card-surface"></div><div class="card-inner">⭐ Popular Items</div></div>
+              <div class="glass-card pop-tag">
+                <div class="card-surface"></div>
+                <div class="card-inner">⭐ Popular Items</div>
+              </div>
               <div class="pop-subtitle">Tonight's Favorites</div>
             </div>
             <div class="pop-list">
-              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=80&h=80&fit=crop&crop=center" alt="Veg Burger"></div><div class="pop-info"><div class="pop-name">SS Special Burger</div><div class="pop-cat">Signature</div></div><div class="pop-price">₹109</div></div></div>
-              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=80&h=80&fit=crop&crop=center" alt="Veg Frankie"></div><div class="pop-info"><div class="pop-name">SS Special Frankie</div><div class="pop-cat">Signature</div></div><div class="pop-price">₹149</div></div></div>
-              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=80&h=80&fit=crop&crop=center" alt="Veg Cheese Burger"></div><div class="pop-info"><div class="pop-name">Cheese Blast Burger</div><div class="pop-cat">Signature Burger</div></div><div class="pop-price">₹159</div></div></div>
-              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=80&h=80&fit=crop&crop=center" alt="French Fries"></div><div class="pop-info"><div class="pop-name">Cheesy French Fries</div><div class="pop-cat">Fries & Nuggets</div></div><div class="pop-price">₹119</div></div></div>
-              <div class="glass-card pop-item"><div class="card-surface"></div><div class="card-inner pop-item-inner"><div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=80&h=80&fit=crop&crop=center" alt="Veg Sandwich"></div><div class="pop-info"><div class="pop-name">SS Special Sandwich</div><div class="pop-cat">Signature Sandwich</div></div><div class="pop-price">₹199</div></div></div>
+              <div class="glass-card pop-item">
+                <div class="card-surface"></div>
+                <div class="card-inner pop-item-inner">
+                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=80&h=80&fit=crop&crop=center" alt="Veg Burger" loading="lazy"></div>
+                  <div class="pop-info"><div class="pop-name">SS Special Burger</div><div class="pop-cat">Signature</div></div>
+                  <div class="pop-price">₹109</div>
+                </div>
+              </div>
+              <div class="glass-card pop-item">
+                <div class="card-surface"></div>
+                <div class="card-inner pop-item-inner">
+                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=80&h=80&fit=crop&crop=center" alt="Veg Frankie" loading="lazy"></div>
+                  <div class="pop-info"><div class="pop-name">SS Special Frankie</div><div class="pop-cat">Signature</div></div>
+                  <div class="pop-price">₹149</div>
+                </div>
+              </div>
+              <div class="glass-card pop-item">
+                <div class="card-surface"></div>
+                <div class="card-inner pop-item-inner">
+                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=80&h=80&fit=crop&crop=center" alt="Cheese Burger" loading="lazy"></div>
+                  <div class="pop-info"><div class="pop-name">Cheese Blast Burger</div><div class="pop-cat">Signature Burger</div></div>
+                  <div class="pop-price">₹159</div>
+                </div>
+              </div>
+              <div class="glass-card pop-item">
+                <div class="card-surface"></div>
+                <div class="card-inner pop-item-inner">
+                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=80&h=80&fit=crop&crop=center" alt="Fries" loading="lazy"></div>
+                  <div class="pop-info"><div class="pop-name">Cheesy French Fries</div><div class="pop-cat">Fries & Nuggets</div></div>
+                  <div class="pop-price">₹119</div>
+                </div>
+              </div>
+              <div class="glass-card pop-item">
+                <div class="card-surface"></div>
+                <div class="card-inner pop-item-inner">
+                  <div class="pop-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=80&h=80&fit=crop&crop=center" alt="Sandwich" loading="lazy"></div>
+                  <div class="pop-info"><div class="pop-name">SS Special Sandwich</div><div class="pop-cat">Signature Sandwich</div></div>
+                  <div class="pop-price">₹199</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- ═══ STATS ═══ -->
+  <!-- ═══════════ STATS ═══════════ -->
   <section class="stats-section">
     <div class="stats-row">
       <div class="glass-card stat-card"><div class="card-surface"></div><div class="card-inner stat-inner"><div class="stat-num">80+</div><div class="stat-label">Menu Items</div></div></div>
@@ -161,7 +235,7 @@
     </div>
   </section>
 
-  <!-- ═══ GALLERY ═══ -->
+  <!-- ═══════════ GALLERY ═══════════ -->
   <section class="section" id="gallery">
     <div class="sec-head">
       <div class="glass-card sec-tag"><div class="card-surface"></div><div class="card-inner">🖼 Food Gallery</div></div>
@@ -169,16 +243,82 @@
       <p class="sec-sub">Handcrafted with love — fresh every night 🌿 Pure Veg</p>
     </div>
     <div class="gallery-grid">
-      <div class="glass-card gallery-card" onclick="goToMenu('burger')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=280&fit=crop&crop=center" alt="Veg Burger" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">11 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍔</span><div class="gallery-info"><div class="gallery-name">Burger</div><div class="gallery-range">₹69 – ₹109</div></div><span class="gallery-arrow">›</span></div></div>
-      <div class="glass-card gallery-card" onclick="goToMenu('frankie')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=280&fit=crop&crop=center" alt="Veg Frankie" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">12 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🌯</span><div class="gallery-info"><div class="gallery-name">Frankie</div><div class="gallery-range">₹99 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
-      <div class="glass-card gallery-card" onclick="goToMenu('sandwich')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&h=280&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">13 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🥪</span><div class="gallery-info"><div class="gallery-name">Sandwich</div><div class="gallery-range">₹79 – ₹139</div></div><span class="gallery-arrow">›</span></div></div>
-      <div class="glass-card gallery-card" onclick="goToMenu('fries')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&h=280&fit=crop&crop=center" alt="French Fries" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">6 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍟</span><div class="gallery-info"><div class="gallery-name">Fries & Nuggets</div><div class="gallery-range">₹79 – ₹129</div></div><span class="gallery-arrow">›</span></div></div>
-      <div class="glass-card gallery-card" onclick="goToMenu('maggie')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=500&h=280&fit=crop&crop=center" alt="Veg Maggie" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">7 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🍜</span><div class="gallery-info"><div class="gallery-name">Maggie</div><div class="gallery-range">₹79 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
-      <div class="glass-card gallery-card" onclick="goToMenu('tikka')"><div class="card-surface"></div><div class="gallery-img-wrap"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&h=280&fit=crop&crop=center" alt="Tikka Pav" loading="lazy"><div class="gallery-img-overlay"><span class="gallery-count glass-card">8 items</span></div></div><div class="card-inner gallery-body"><span class="gallery-emoji">🫓</span><div class="gallery-info"><div class="gallery-name">Tikka Pav</div><div class="gallery-range">₹129 – ₹149</div></div><span class="gallery-arrow">›</span></div></div>
+      <div class="glass-card gallery-card" onclick="goToMenu('burger')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=280&fit=crop&crop=center" alt="Veg Burger" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">11 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🍔</span>
+          <div class="gallery-info"><div class="gallery-name">Burger</div><div class="gallery-range">₹69 – ₹109</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
+      <div class="glass-card gallery-card" onclick="goToMenu('frankie')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=280&fit=crop&crop=center" alt="Veg Frankie" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">12 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🌯</span>
+          <div class="gallery-info"><div class="gallery-name">Frankie</div><div class="gallery-range">₹99 – ₹149</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
+      <div class="glass-card gallery-card" onclick="goToMenu('sandwich')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&h=280&fit=crop&crop=center" alt="Veg Sandwich" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">13 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🥪</span>
+          <div class="gallery-info"><div class="gallery-name">Sandwich</div><div class="gallery-range">₹79 – ₹139</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
+      <div class="glass-card gallery-card" onclick="goToMenu('fries')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&h=280&fit=crop&crop=center" alt="French Fries" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">6 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🍟</span>
+          <div class="gallery-info"><div class="gallery-name">Fries & Nuggets</div><div class="gallery-range">₹79 – ₹129</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
+      <div class="glass-card gallery-card" onclick="goToMenu('maggie')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=500&h=280&fit=crop&crop=center" alt="Veg Maggie" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">7 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🍜</span>
+          <div class="gallery-info"><div class="gallery-name">Maggie</div><div class="gallery-range">₹79 – ₹149</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
+      <div class="glass-card gallery-card" onclick="goToMenu('tikka')">
+        <div class="card-surface"></div>
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&h=280&fit=crop&crop=center" alt="Tikka Pav" loading="lazy">
+          <div class="gallery-img-overlay"><span class="gallery-count glass-card">8 items</span></div>
+        </div>
+        <div class="card-inner gallery-body">
+          <span class="gallery-emoji">🫓</span>
+          <div class="gallery-info"><div class="gallery-name">Tikka Pav</div><div class="gallery-range">₹129 – ₹149</div></div>
+          <span class="gallery-arrow">›</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══ MENU ═══ -->
+  <!-- ═══════════ MENU ═══════════ -->
   <section class="section" id="menu">
     <div class="sec-head">
       <div class="glass-card sec-tag"><div class="card-surface"></div><div class="card-inner">📋 Full Menu</div></div>
@@ -212,19 +352,19 @@
       </div>
     </div>
 
-    <!-- ✅ PRICE FILTER — inside menu section after tabs -->
+    <!-- Price Filter -->
     <div class="price-filter-wrap glass-card">
       <div class="card-surface"></div>
       <div class="card-inner price-filter-inner">
         <span class="price-filter-label">💰 Filter:</span>
-        <button class="price-filter-btn price-filter-active" data-range="all" onclick="setPriceFilter('all',this)">All</button>
-        <button class="price-filter-btn" data-range="budget" onclick="setPriceFilter('budget',this)">₹69–₹99</button>
-        <button class="price-filter-btn" data-range="mid" onclick="setPriceFilter('mid',this)">₹100–₹149</button>
-        <button class="price-filter-btn" data-range="premium" onclick="setPriceFilter('premium',this)">₹150+</button>
+        <button class="price-filter-btn price-filter-active" data-range="all"    onclick="setPriceFilter('all',this)">All</button>
+        <button class="price-filter-btn"                     data-range="budget" onclick="setPriceFilter('budget',this)">₹69–₹99</button>
+        <button class="price-filter-btn"                     data-range="mid"    onclick="setPriceFilter('mid',this)">₹100–₹149</button>
+        <button class="price-filter-btn"                     data-range="premium" onclick="setPriceFilter('premium',this)">₹150+</button>
       </div>
     </div>
 
-    <!-- ✅ DOWNLOAD MENU — inside menu section -->
+    <!-- Download Menu -->
     <div class="download-wrap">
       <button class="btn btn-glass download-menu-btn" onclick="downloadMenu()">📥 Download Menu</button>
     </div>
@@ -387,12 +527,19 @@
 
     <!-- No Results -->
     <div class="no-results" id="noResults" style="display:none;">
-      <div class="glass-card no-results-card"><div class="card-surface"></div><div class="card-inner no-results-inner"><div class="no-results-emoji">🔍</div><p>No items found for "<span id="searchTerm"></span>"</p><button onclick="clearSearch()" class="btn btn-accent">Clear Search</button></div></div>
+      <div class="glass-card no-results-card">
+        <div class="card-surface"></div>
+        <div class="card-inner no-results-inner">
+          <div class="no-results-emoji">🔍</div>
+          <p>No items found for "<span id="searchTerm"></span>"</p>
+          <button onclick="clearSearch()" class="btn btn-accent">Clear Search</button>
+        </div>
+      </div>
     </div>
 
   </section>
 
-  <!-- ═══ CTA ═══ -->
+  <!-- ═══════════ CTA ═══════════ -->
   <section class="section cta-section">
     <div class="glass-card cta-card">
       <div class="card-surface"></div>
@@ -409,7 +556,7 @@
     </div>
   </section>
 
-  <!-- ═══ INFO & CONTACT ═══ -->
+  <!-- ═══════════ INFO & CONTACT ═══════════ -->
   <section class="section" id="info">
     <div class="sec-head">
       <div class="glass-card sec-tag"><div class="card-surface"></div><div class="card-inner">📍 Info & Contact</div></div>
@@ -439,12 +586,22 @@
           <div class="glass-card info-icon orange-icon"><div class="card-surface"></div><div class="card-inner">📍</div></div>
           <h4 class="info-title">Our Location</h4>
           <div class="info-rows">
-            <div class="glass-card info-row-card"><div class="card-surface"></div><div class="card-inner info-row-inner"><span>📌</span> Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051</div></div>
+            <div class="glass-card info-row-card">
+              <div class="card-surface"></div>
+              <div class="card-inner info-row-inner">
+                <span>📌</span> Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051
+              </div>
+            </div>
           </div>
           <div class="map-wrap">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Snack Station Location"></iframe>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin"
+              width="100%" height="200" style="border:0;"
+              allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Snack Station Location">
+            </iframe>
           </div>
-          <!-- ✅ Map button opens popup instead of external link -->
           <button onclick="openMapsPopup()" class="glass-card map-btn">
             <div class="card-surface"></div>
             <div class="card-inner">🗺 View Full Map</div>
@@ -463,19 +620,25 @@
             <div class="glass-card info-row-card"><div class="card-surface"></div><div class="card-inner info-row-inner"><span>📱</span> <a href="tel:9081081033">9081081033</a></div></div>
             <div class="glass-card info-row-card"><div class="card-surface"></div><div class="card-inner info-row-inner"><span>💬</span> WhatsApp Available</div></div>
           </div>
-          <a href="https://instagram.com/snack_station84" target="_blank" class="glass-card insta-btn"><div class="card-surface"></div><div class="card-inner">📸 @snack_station84</div></a>
+          <a href="https://instagram.com/snack_station84" target="_blank" class="glass-card insta-btn">
+            <div class="card-surface"></div>
+            <div class="card-inner">📸 @snack_station84</div>
+          </a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ═══ FOOTER ═══ -->
+  <!-- ═══════════ FOOTER ═══════════ -->
   <footer class="footer">
     <div class="glass-card footer-card">
       <div class="card-surface"></div>
       <div class="card-inner footer-inner">
-        <div class="footer-brand"><div class="brand-icon sm-icon">🍔</div><span class="footer-name">SNACK STATION</span></div>
+        <div class="footer-brand">
+          <div class="brand-icon sm-icon">🍔</div>
+          <span class="footer-name">SNACK STATION</span>
+        </div>
         <p class="footer-copy">KHANEKA THIKANA · Vejalpur, Ahmedabad · Open 8PM – 3AM</p>
         <div class="footer-links">
           <a href="tel:8460891897" class="glass-card foot-btn"><div class="card-surface"></div><div class="card-inner">📞</div></a>
@@ -526,13 +689,22 @@
         <h3>📍 Snack Station Location</h3>
         <button onclick="closeMapsPopup()" class="maps-close-btn">✕</button>
       </div>
-      <div class="maps-popup-address">📌 Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051</div>
+      <div class="maps-popup-address">
+        📌 Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051
+      </div>
       <div class="maps-iframe-wrap">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4518.837160899371!2d72.51693449999999!3d23.0071743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9bc9bf17a25d%3A0x92a0ab52e1238f8d!2sSnack%20Station!5e1!3m2!1sen!2sin!4v1777630567415!5m2!1sen!2sin"
+          width="100%" height="320" style="border:0;"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
       <div class="maps-popup-btns">
-        <a href="https://www.google.com/maps/search/Kalpesh+Rang+Upvan+Society+Opp+Abhishek+Xerox+Vejalpur+Ahmedabad+380051" target="_blank" class="btn btn-solid">🗺 Open in Google Maps</a>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Snack+Station+Vejalpur+Ahmedabad" target="_blank" class="btn btn-accent">🧭 Get Directions</a>
+        <a href="https://www.google.com/maps/search/Kalpesh+Rang+Upvan+Society+Opp+Abhishek+Xerox+Vejalpur+Ahmedabad+380051"
+           target="_blank" class="btn btn-solid">🗺 Open in Google Maps</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Snack+Station+Vejalpur+Ahmedabad"
+           target="_blank" class="btn btn-accent">🧭 Get Directions</a>
       </div>
     </div>
   </div>
