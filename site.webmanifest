@@ -1,0 +1,66 @@
+{
+  "name": "Snack Station – KHANEKA THIKANA",
+  "short_name": "Snack Station",
+  "description": "Best late-night food in Vejalpur, Ahmedabad. Open 8 PM – 3 AM. Pure Veg.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#ff6b35",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-IN",
+  "categories": ["food", "restaurant", "lifestyle"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Menu",
+      "short_name": "Menu",
+      "description": "Browse the full Snack Station menu",
+      "url": "/#menu",
+      "icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+    },
+    {
+      "name": "Call Us",
+      "short_name": "Call",
+      "description": "Call Snack Station now",
+      "url": "tel:8460891897",
+      "icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "label": "Snack Station Homepage"
+    }
+  ]
+}

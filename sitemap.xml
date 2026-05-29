@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xsi:schemaLocation="
+    http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+    http://www.google.com/schemas/sitemap-image/1.1
+    http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+  <!-- ═══ MAIN PAGE ═══ -->
+  <url>
+    <loc>https://snackstation.aitoolcor.com/</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://snackstation.aitoolcor.com/og-image.jpg</image:loc>
+      <image:title>Snack Station – KHANEKA THIKANA – Late Night Food Vejalpur Ahmedabad</image:title>
+      <image:caption>Your favourite late-night food destination in Vejalpur, Ahmedabad. Open 8 PM to 3 AM.</image:caption>
+      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
+      <image:license>https://snackstation.aitoolcor.com/</image:license>
+    </image:image>
+  </url>
+
+  <!-- ═══ SECTION ANCHORS ═══ -->
+  <url>
+    <loc>https://snackstation.aitoolcor.com/#home</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://snackstation.aitoolcor.com/#gallery</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://snackstation.aitoolcor.com/#menu</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=280&fit=crop</image:loc>
+      <image:title>Veg Burger – Snack Station Menu</image:title>
+      <image:caption>Fresh Veg Burgers starting at ₹69 – Snack Station Vejalpur</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=280&fit=crop</image:loc>
+      <image:title>Veg Frankie – Snack Station Menu</image:title>
+      <image:caption>Fresh Veg Frankie starting at ₹99 – Snack Station Vejalpur</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&h=280&fit=crop</image:loc>
+      <image:title>Veg Sandwich – Snack Station Menu</image:title>
+      <image:caption>Fresh Grilled Sandwich starting at ₹79 – Snack Station Vejalpur</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://snackstation.aitoolcor.com/#info</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://snackstation.aitoolcor.com/#contact</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

@@ -55,33 +55,34 @@ function initPageLoader() {
   const loader = document.getElementById('pageLoader');
   if (!loader) return;
 
-  window.addEventListener('load', () => {
+  const hide = () => {
+    loader.classList.add('loader-hide');
     setTimeout(() => {
-      loader.classList.add('loader-hide');
-      setTimeout(() => {
-        loader.remove();
-        /* ✅ FIX: Recalculate sticky tabs after loader removes */
-        _recalcStickyTop();
-      }, 600);
-    }, 800);
-  });
+      loader.remove();
+      _recalcStickyTop();
+    }, 600);
+  };
+
+  if (document.readyState === 'complete') {
+    setTimeout(hide, 800);
+  } else {
+    window.addEventListener('load', () => setTimeout(hide, 800));
+  }
 }
 
 /* ═══════════════════════════════════════════
    LIVE OPEN / CLOSED STATUS
-   Open: 8:00 PM (20:00) to 3:00 AM (03:00)
+   Open: 8:00 PM (20:00) → 3:00 AM (03:00)
 ═══════════════════════════════════════════ */
 function isOpenNow() {
   const now  = new Date();
   const mins = now.getHours() * 60 + now.getMinutes();
-  /* 20:00 = 1200 mins, 03:00 = 180 mins */
   return mins >= 1200 || mins < 180;
 }
 
 function updateOpenStatus() {
   const open = isOpenNow();
 
-  /* Nav badge */
   if (DOM.navBadge) {
     DOM.navBadge.innerHTML = open
       ? '<span class="live-dot"></span> Open Now'
@@ -91,7 +92,6 @@ function updateOpenStatus() {
       : 'nav-badge nav-badge-closed';
   }
 
-  /* Status bar */
   const statusBar = document.getElementById('statusBar');
   if (statusBar) {
     statusBar.textContent = open
@@ -102,7 +102,6 @@ function updateOpenStatus() {
       : 'status-bar status-closed';
   }
 
-  /* Hero badge */
   const heroBadge = document.querySelector('.badge-inner span:last-child');
   if (heroBadge) {
     heroBadge.textContent = open
@@ -126,10 +125,7 @@ let _menuSection    = null;
 function initStickyTabs() {
   _menuSection = document.getElementById('menu');
   if (!DOM.tabStrip || !_menuSection) return;
-
-  /* ✅ FIX: Delay calculation to ensure layout is complete */
   setTimeout(_recalcStickyTop, 500);
-  /* Also recalc on resize */
   window.addEventListener('resize', _debounce(_recalcStickyTop, 200));
 }
 
@@ -140,10 +136,8 @@ function _recalcStickyTop() {
 
 function updateStickyTabs(y) {
   if (!DOM.tabStrip || !_menuSection) return;
-
   const menuBottom  = _menuSection.offsetTop + _menuSection.offsetHeight;
   const shouldStick = y >= _tabStripTop - 86 && y < menuBottom - 100;
-
   if (shouldStick && !_tabStripSticky) {
     DOM.tabStrip.classList.add('tab-strip-sticky');
     _tabStripSticky = true;
@@ -151,6 +145,36 @@ function updateStickyTabs(y) {
     DOM.tabStrip.classList.remove('tab-strip-sticky');
     _tabStripSticky = false;
   }
+}
+
+/* ═══════════════════════════════════════════
+   DYNAMIC MENU ITEM COUNT IN TABS
+   Keeps tab counts accurate even after filters
+═══════════════════════════════════════════ */
+function _buildTabCounts() {
+  const countMap = {};
+  let total = 0;
+  DOM.menuCats.forEach(cat => {
+    const key   = cat.dataset.cat;
+    const items = cat.querySelectorAll('.menu-item').length;
+    countMap[key] = items;
+    total += items;
+  });
+
+  DOM.menuTabs.forEach(tab => {
+    const onclick = tab.getAttribute('onclick') || '';
+    const m = onclick.match(/'([^']+)'/);
+    if (!m) return;
+    const cat = m[1];
+    const cnt = cat === 'all' ? total : (countMap[cat] || 0);
+    let badge = tab.querySelector('.tab-cnt');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'tab-cnt';
+      tab.appendChild(badge);
+    }
+    badge.textContent = cnt > 99 ? '99+' : cnt;
+  });
 }
 
 /* ═══════════════════════════════════════════
@@ -162,7 +186,7 @@ let _favourites = new Set();
 function loadFavourites() {
   try {
     const saved = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
-    _favourites = new Set(saved);
+    _favourites = new Set(Array.isArray(saved) ? saved : []);
   } catch {
     _favourites = new Set();
   }
@@ -196,15 +220,13 @@ function updateFavCount() {
   const badge = document.getElementById('favCount');
   if (!badge) return;
   const count = _favourites.size;
-  badge.textContent = count;
-  badge.style.display = count > 0 ? 'flex' : 'none';
+  badge.textContent    = count;
+  badge.style.display  = count > 0 ? 'flex' : 'none';
 }
 
-/* Inject heart buttons */
 function injectFavButtons() {
   DOM.menuItems.forEach(item => {
     if (item.querySelector('.fav-btn')) return;
-
     const nameEl = item.querySelector('.item-name');
     const name   = nameEl ? nameEl.textContent.trim() : '';
     if (!name) return;
@@ -214,7 +236,6 @@ function injectFavButtons() {
     btn.title     = _favourites.has(name) ? 'Remove from favourites' : 'Add to favourites';
     btn.innerHTML = _favourites.has(name) ? '♥' : '♡';
     btn.setAttribute('aria-label', 'Favourite ' + name);
-
     if (_favourites.has(name)) btn.classList.add('fav-active');
 
     btn.addEventListener('click', e => {
@@ -227,7 +248,6 @@ function injectFavButtons() {
   });
 }
 
-/* Show favourites panel */
 function showFavourites() {
   const panel = document.getElementById('favPanel');
   if (!panel) return;
@@ -257,10 +277,10 @@ function showFavourites() {
         '<span class="fav-item-price">' + _escHtml(price) + '</span>' +
       '</div>';
 
-    /* ✅ FIX: Use addEventListener instead of inline onclick — prevents XSS */
     const removeBtn = document.createElement('button');
-    removeBtn.className = 'fav-remove-btn';
+    removeBtn.className   = 'fav-remove-btn';
     removeBtn.textContent = '✕';
+    removeBtn.setAttribute('aria-label', 'Remove ' + name + ' from favourites');
     removeBtn.addEventListener('click', () => removeFav(name, row));
 
     row.querySelector('.fav-row-inner').appendChild(removeBtn);
@@ -277,7 +297,6 @@ function removeFav(name, rowEl) {
   updateFavCount();
   rowEl?.remove();
 
-  /* Update heart button in menu */
   DOM.menuItems.forEach(item => {
     if (item.querySelector('.item-name')?.textContent.trim() === name) {
       const btn = item.querySelector('.fav-btn');
@@ -314,19 +333,19 @@ const PRICE_RANGES = {
 function setPriceFilter(range, btnEl) {
   _activePriceFilter = range;
 
-  document.querySelectorAll('.price-filter-btn').forEach(b => {
-    b.classList.remove('price-filter-active');
-  });
+  document.querySelectorAll('.price-filter-btn').forEach(b =>
+    b.classList.remove('price-filter-active')
+  );
   if (btnEl) btnEl.classList.add('price-filter-active');
 
-  const [min, max] = PRICE_RANGES[range];
+  const [min, max] = PRICE_RANGES[range] || PRICE_RANGES.all;
 
   requestAnimationFrame(() => {
     DOM.menuCats.forEach(cat => {
       let catVisible = 0;
       cat.querySelectorAll('.menu-item').forEach(item => {
         const priceText = item.querySelector('.item-price')?.textContent || '';
-        const price     = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
+        const price     = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 0;
         const show      = price >= min && price <= max;
         item.style.display = show ? '' : 'none';
         if (show) catVisible++;
@@ -368,7 +387,8 @@ function downloadMenu() {
     if (items.length) sections.push({ catName, items });
   });
 
-  const html = '<!DOCTYPE html>' +
+  const html =
+'<!DOCTYPE html>' +
 '<html lang="en"><head><meta charset="UTF-8">' +
 '<title>Snack Station Menu</title>' +
 '<style>' +
@@ -486,15 +506,14 @@ function showCat(cat, tabEl) {
       });
     });
 
+    /* Stagger-animate visible items */
     let delay = 0;
-    document.querySelectorAll('.menu-cat.visible .menu-item')
-      .forEach(item => {
-        item.style.animation = 'none';
-        void item.offsetWidth;
-        item.style.animation =
-          'fu .30s ' + delay.toFixed(3) + 's cubic-bezier(.22,1,.36,1) both';
-        delay += 0.020;
-      });
+    document.querySelectorAll('.menu-cat.visible .menu-item').forEach(item => {
+      item.style.animation = 'none';
+      void item.offsetWidth;
+      item.style.animation = 'fu .30s ' + delay.toFixed(3) + 's cubic-bezier(.22,1,.36,1) both';
+      delay += 0.020;
+    });
   });
 }
 
@@ -524,10 +543,9 @@ let _itemCache   = null;
 let _searchTimer = null;
 
 function _buildItemCache() {
-  if (_itemCache) return;
   _itemCache = DOM.menuItems.map(item => ({
     el:   item,
-    name: (item.querySelector('.item-name')?.textContent || '').toLowerCase(),
+    name: (item.querySelector('.item-name')?.textContent || '').toLowerCase().trim(),
     cat:  item.closest('.menu-cat'),
   }));
 }
@@ -544,7 +562,7 @@ function _doSearch(rawQuery) {
   const q = rawQuery.trim().toLowerCase();
   if (!q) { _clearSearchState(); return; }
 
-  _buildItemCache();
+  if (!_itemCache) _buildItemCache();
   resetPriceFilter();
   DOM.menuTabs.forEach((t, i) => t.classList.toggle('active', i === 0));
 
@@ -624,7 +642,7 @@ function showToast(msg, duration) {
   DOM.toastMsg.textContent = msg;
   DOM.toast.classList.add('show');
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(function() {
+  _toastTimer = setTimeout(() => {
     DOM.toast.classList.remove('show');
   }, duration);
 }
@@ -635,10 +653,10 @@ function showToast(msg, duration) {
 let _scrollTicking = false;
 let _lastScrollY   = 0;
 
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', () => {
   _lastScrollY = window.scrollY;
   if (_scrollTicking) return;
-  requestAnimationFrame(function() {
+  requestAnimationFrame(() => {
     _onScroll(_lastScrollY);
     _scrollTicking = false;
   });
@@ -651,13 +669,13 @@ function _onScroll(y) {
   }
   updateStickyTabs(y);
 
-  var heroH = DOM.heroSection ? DOM.heroSection.offsetHeight : 0;
+  const heroH = DOM.heroSection ? DOM.heroSection.offsetHeight : 0;
   if (y < heroH - 100) { _highlightNav('#home'); return; }
 
-  for (var i = 0; i < DOM.sections.length; i++) {
-    var sec    = DOM.sections[i];
-    var top    = sec.offsetTop - 120;
-    var bottom = top + sec.offsetHeight;
+  for (let i = 0; i < DOM.sections.length; i++) {
+    const sec    = DOM.sections[i];
+    const top    = sec.offsetTop - 120;
+    const bottom = top + sec.offsetHeight;
     if (y >= top && y < bottom) {
       _highlightNav('#' + sec.id);
       break;
@@ -666,7 +684,7 @@ function _onScroll(y) {
 }
 
 function _highlightNav(href) {
-  DOM.navLinks.forEach(function(a) {
+  DOM.navLinks.forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === href);
   });
 }
@@ -674,16 +692,16 @@ function _highlightNav(href) {
 /* ═══════════════════════════════════════════
    KEYBOARD SHORTCUTS
 ═══════════════════════════════════════════ */
-document.addEventListener('keydown', function(e) {
-  var tag      = document.activeElement.tagName;
-  var isTyping = tag === 'INPUT' || tag === 'TEXTAREA';
+document.addEventListener('keydown', e => {
+  const tag      = document.activeElement.tagName;
+  const isTyping = tag === 'INPUT' || tag === 'TEXTAREA';
 
   if (e.key === '/' && !isTyping) {
     e.preventDefault();
-    var menuSec = document.getElementById('menu');
+    const menuSec = document.getElementById('menu');
     if (DOM.menuSearch && menuSec) {
       menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(function() {
+      setTimeout(() => {
         DOM.menuSearch.focus();
         showToast('🔍 Search menu items…');
       }, 420);
@@ -700,39 +718,23 @@ document.addEventListener('keydown', function(e) {
 });
 
 /* ═══════════════════════════════════════════
-   INTERSECTION OBSERVER
+   LAZY IMAGE ERROR FALLBACK
 ═══════════════════════════════════════════ */
-var _io = new IntersectionObserver(
-  function(entries) {
-    entries.forEach(function(entry) {
-      if (!entry.isIntersecting) return;
-      var el = entry.target;
-      el.style.opacity            = '1';
-      el.style.animationPlayState = 'running';
-      _io.unobserve(el);
-    });
-  },
-  { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
-);
-
-function _initAnimations() {
-  document.querySelectorAll(
-    '.anim, .stat-card, .gallery-card, .info-card, .pop-item'
-  ).forEach(function(el) {
-    if (el.closest('.navbar') || el.closest('.mobile-nav')) return;
-    el.style.opacity            = '0';
-    el.style.animationPlayState = 'paused';
-    _io.observe(el);
+function _initLazyImages() {
+  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.opacity = '0.3';
+    }, { once: true });
   });
 }
 
 /* ═══════════════════════════════════════════
    SMOOTH ANCHOR SCROLL — event delegation
 ═══════════════════════════════════════════ */
-document.addEventListener('click', function(e) {
-  var anchor = e.target.closest('a[href^="#"]');
+document.addEventListener('click', e => {
+  const anchor = e.target.closest('a[href^="#"]');
   if (!anchor) return;
-  var target = document.querySelector(anchor.getAttribute('href'));
+  const target = document.querySelector(anchor.getAttribute('href'));
   if (!target) return;
   e.preventDefault();
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -740,33 +742,19 @@ document.addEventListener('click', function(e) {
 });
 
 /* ═══════════════════════════════════════════
-   LAZY IMAGE ERROR FALLBACK
-═══════════════════════════════════════════ */
-function _initLazyImages() {
-  document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
-    img.addEventListener('error', function() {
-      img.style.opacity = '0.3';
-    }, { once: true });
-  });
-}
-
-/* ═══════════════════════════════════════════
    UTILITY HELPERS
 ═══════════════════════════════════════════ */
-
-/* ✅ HTML escape — prevent XSS in fav names */
 function _escHtml(str) {
-  var div = document.createElement('div');
+  const div = document.createElement('div');
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
 }
 
-/* ✅ Debounce — for resize handler */
 function _debounce(fn, ms) {
-  var timer;
-  return function() {
+  let timer;
+  return function(...args) {
     clearTimeout(timer);
-    timer = setTimeout(fn, ms);
+    timer = setTimeout(() => fn.apply(this, args), ms);
   };
 }
 
@@ -781,9 +769,9 @@ function init() {
   loadFavourites();
   injectFavButtons();
   updateFavCount();
-  _initAnimations();
+  _buildItemCache();     /* build immediately — no scroll needed */
+  _buildTabCounts();     /* dynamic tab counts */
   _initLazyImages();
-  _buildItemCache();
 }
 
 if (document.readyState === 'loading') {
