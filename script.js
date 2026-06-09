@@ -1,6 +1,11 @@
 'use strict';
 
 /* ═══════════════════════════════════════════
+   CONFIG — Change PDF filename here
+═══════════════════════════════════════════ */
+const MENU_PDF_FILE = 'SnackStation-Menu.pdf';
+
+/* ═══════════════════════════════════════════
    CACHE DOM ELEMENTS
 ═══════════════════════════════════════════ */
 const DOM = {
@@ -149,7 +154,6 @@ function updateStickyTabs(y) {
 
 /* ═══════════════════════════════════════════
    DYNAMIC MENU ITEM COUNT IN TABS
-   Keeps tab counts accurate even after filters
 ═══════════════════════════════════════════ */
 function _buildTabCounts() {
   const countMap = {};
@@ -371,75 +375,36 @@ function resetPriceFilter() {
 }
 
 /* ═══════════════════════════════════════════
-   DOWNLOAD MENU — PDF
+   DOWNLOAD MENU — Direct PDF File Download
+   Downloads the existing SnackStation-Menu.pdf file
 ═══════════════════════════════════════════ */
 function downloadMenu() {
-  const sections = [];
+  showToast('📥 Downloading menu PDF…');
 
-  DOM.menuCats.forEach(cat => {
-    const catName = cat.querySelector('.cat-name')?.textContent || '';
-    const items   = [];
-    cat.querySelectorAll('.menu-item').forEach(item => {
-      const name  = item.querySelector('.item-name')?.textContent.trim()  || '';
-      const price = item.querySelector('.item-price')?.textContent.trim() || '';
-      if (name) items.push({ name, price });
-    });
-    if (items.length) sections.push({ catName, items });
-  });
+  // GA event track
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'download_menu', {
+        event_category: 'engagement',
+        event_label: 'Menu PDF Download'
+      });
+    }
+  } catch (e) { /* silent */ }
 
-  const html =
-'<!DOCTYPE html>' +
-'<html lang="en"><head><meta charset="UTF-8">' +
-'<title>Snack Station Menu</title>' +
-'<style>' +
-'*{margin:0;padding:0;box-sizing:border-box}' +
-'body{font-family:"DM Sans",Arial,sans-serif;background:#fff;color:#111;padding:32px;max-width:800px;margin:0 auto}' +
-'.header{text-align:center;margin-bottom:32px;padding-bottom:20px;border-bottom:3px solid #f97316}' +
-'.header h1{font-size:36px;font-weight:800;color:#f97316;letter-spacing:-1px}' +
-'.header p{color:#666;font-size:14px;margin-top:6px}' +
-'.header .timing{display:inline-block;margin-top:10px;padding:6px 18px;background:#f97316;color:white;border-radius:999px;font-size:13px;font-weight:600}' +
-'.cat-section{margin-bottom:28px}' +
-'.cat-title{font-size:18px;font-weight:700;color:#111;padding:8px 0;border-bottom:2px solid #f0f0f0;margin-bottom:12px;display:flex;align-items:center;gap:8px}' +
-'.cat-title::before{content:"";width:4px;height:18px;background:#f97316;border-radius:2px;display:inline-block}' +
-'.item-row{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:6px;font-size:13.5px}' +
-'.item-row:nth-child(even){background:#f9f9f9}' +
-'.item-dot{width:8px;height:8px;border:1.5px solid #22c55e;border-radius:2px;margin-right:8px;flex-shrink:0;display:inline-block}' +
-'.item-name-col{display:flex;align-items:center}' +
-'.item-price-col{font-weight:700;color:#f97316;flex-shrink:0}' +
-'.footer{margin-top:36px;padding-top:16px;border-top:2px solid #f0f0f0;text-align:center;color:#888;font-size:12px;line-height:1.7}' +
-'.veg-badge{display:inline-block;padding:3px 10px;background:#dcfce7;color:#16a34a;border-radius:999px;font-size:11px;font-weight:600;margin-top:8px}' +
-'@media print{body{padding:20px}.cat-section{page-break-inside:avoid}}' +
-'</style></head><body>' +
-'<div class="header">' +
-'<h1>🍔 SNACK STATION</h1>' +
-'<p>KHANEKA THIKANA · Vejalpur, Ahmedabad</p>' +
-'<div class="timing">⏰ Open 8:00 PM – 3:00 AM · Every Night</div>' +
-'<div class="veg-badge">🌿 100% Pure Veg Menu</div>' +
-'</div>' +
-sections.map(function(s) {
-  return '<div class="cat-section">' +
-    '<div class="cat-title">' + _escHtml(s.catName) + '</div>' +
-    s.items.map(function(it) {
-      return '<div class="item-row">' +
-        '<div class="item-name-col"><span class="item-dot"></span>' + _escHtml(it.name) + '</div>' +
-        '<div class="item-price-col">' + _escHtml(it.price) + '</div>' +
-        '</div>';
-    }).join('') +
-    '</div>';
-}).join('') +
-'<div class="footer">' +
-'<strong>📞 8460891897 | 9081081033</strong><br>' +
-'📍 Kalpesh Rang Upvan Society, Opp Abhishek Xerox, Vejalpur, Ahmedabad – 380051<br>' +
-'📸 Instagram: @snack_station84<br><br>' +
-'<em>All prices inclusive of taxes · Menu subject to change</em>' +
-'</div></body></html>';
+  // Create temporary anchor element for download
+  const link = document.createElement('a');
+  link.href = MENU_PDF_FILE;
+  link.download = 'SnackStation-Menu.pdf';
+  link.target = '_blank';
+  link.rel = 'noopener';
 
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ Please allow popups to download menu'); return; }
-  win.document.write(html);
-  win.document.close();
-  win.addEventListener('load', () => { setTimeout(() => win.print(), 400); });
-  showToast('📥 Menu opening for download…');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  setTimeout(() => {
+    showToast('✅ Menu PDF download started!');
+  }, 600);
 }
 
 /* ═══════════════════════════════════════════
@@ -769,8 +734,8 @@ function init() {
   loadFavourites();
   injectFavButtons();
   updateFavCount();
-  _buildItemCache();     /* build immediately — no scroll needed */
-  _buildTabCounts();     /* dynamic tab counts */
+  _buildItemCache();
+  _buildTabCounts();
   _initLazyImages();
 }
 
