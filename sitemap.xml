@@ -1,87 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-  xsi:schemaLocation="
-    http://www.sitemaps.org/schemas/sitemap/0.9
-    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-    http://www.google.com/schemas/sitemap-image/1.1
-    http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- ═══════════════════════════════════════
-       MAIN HOMEPAGE
-       Snack Station - KHANEKA THIKANA
-       Vejalpur, Ahmedabad
-  ═══════════════════════════════════════ -->
   <url>
     <loc>https://snackstation.aitoolcor.com/</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-
-    <!-- Brand / OG Image -->
-    <image:image>
-      <image:loc>https://snackstation.aitoolcor.com/og-image.jpg</image:loc>
-      <image:title>Snack Station – KHANEKA THIKANA – Late Night Food Vejalpur Ahmedabad</image:title>
-      <image:caption>Your favourite late-night food destination in Vejalpur, Ahmedabad. Open 8 PM to 3 AM every night. Pure Veg.</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-      <image:license>https://snackstation.aitoolcor.com/</image:license>
-    </image:image>
-
-    <!-- Burger Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>Veg Burger Menu – Snack Station Vejalpur</image:title>
-      <image:caption>Fresh Veg Burgers starting at ₹69 – 11 varieties at Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
-    <!-- Frankie Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>Veg Frankie Menu – Snack Station Vejalpur</image:title>
-      <image:caption>Fresh Veg Frankie starting at ₹99 – 12 varieties at Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
-    <!-- Sandwich Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>Veg Sandwich Menu – Snack Station Vejalpur</image:title>
-      <image:caption>Fresh Grilled Sandwich starting at ₹79 – 13 varieties at Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
-    <!-- French Fries Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>French Fries &amp; Nuggets – Snack Station Vejalpur</image:title>
-      <image:caption>Crispy Fries &amp; Cheesy Nuggets starting at ₹79 – Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
-    <!-- Maggie Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>Veg Maggie – Snack Station Vejalpur</image:title>
-      <image:caption>Hot &amp; Saucy Maggie starting at ₹79 – Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
-    <!-- Tikka Pav Image -->
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1100&amp;h=600&amp;fit=crop&amp;crop=center</image:loc>
-      <image:title>Tikka Pav – Snack Station Vejalpur</image:title>
-      <image:caption>Spicy Street-Style Tikka Pav starting at ₹129 – Snack Station Vejalpur Ahmedabad</image:caption>
-      <image:geo_location>Vejalpur, Ahmedabad, Gujarat, India</image:geo_location>
-    </image:image>
-
   </url>
 
-  <!-- ═══════════════════════════════════════
-       MENU PDF FILE (Important for SEO)
-  ═══════════════════════════════════════ -->
   <url>
     <loc>https://snackstation.aitoolcor.com/SnackStation-Menu.pdf</loc>
     <lastmod>2026-06-09</lastmod>
